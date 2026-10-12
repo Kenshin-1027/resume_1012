@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-page-node-id="8Jx2OT4G5udpQ2sCAWqIot">
+<head data-page-node-id="0036Sja8HYiYp9veGa9YgR">
+<meta charset="UTF-8" data-page-node-id="eNJGQ5Y5Ph4DmOjNX3Ng1q">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="8jayorgzhsWz5kAt1A3vCj">
+<title>智核 · AI 智能体探索站</title>
+<style>
+  :root{
+    --bg:#f5f7fc; --surface:#ffffff; --surface-2:#eef2fb; --text:#0f172a;
+    --dim:#5b6b86; --border:#e3e9f4; --accent:#4f46e5; --accent-2:#06b6d4;
+    --ok:#16a34a; --warn:#dc2626; --chip:#eef2ff; --amber:#d97706;
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+    --grad:linear-gradient(135deg,#4f46e5 0%,#06b6d4 100%);
+  }
+  [data-theme="dark"]{
+    --bg:#0a0f1e; --surface:#121a2e; --surface-2:#0f1830; --text:#e8edf7;
+    --dim:#94a3bd; --border:#24304c; --accent:#7c7cf6; --accent-2:#22d3ee;
+    --ok:#34d399; --warn:#f87171; --chip:#1a2440; --amber:#fbbf24;
+    --shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.65;transition:background .35s,color .35s;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+
+  /* ===== Nav ===== */
+  .nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 82%,transparent);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:11px 22px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;margin-right:12px;flex-shrink:0}
+  .logo .dot{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;
+    color:#fff;font-size:16px;box-shadow:0 6px 16px rgba(79,70,229,.4)}
+  .nav-links{display:flex;gap:2px;flex:1;flex-wrap:wrap}
+  .nav-links button{border:0;background:transparent;color:var(--dim);padding:8px 12px;border-radius:999px;
+    font-size:13.5px;font-weight:600;transition:.25s;white-space:nowrap}
+  .nav-links button:hover{color:var(--text);background:var(--surface-2)}
+  .nav-links button.active{color:#fff;background:var(--grad);box-shadow:0 6px 16px rgba(79,70,229,.35)}
+  .theme-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);width:38px;height:38px;
+    border-radius:11px;font-size:17px;transition:.25s;flex-shrink:0}
+  .theme-btn:hover{transform:rotate(20deg) scale(1.06)}
+
+  /* ===== Pages ===== */
+  .page{display:none;padding:36px 0 76px;animation:fade .5s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);background:var(--chip);padding:5px 12px;border-radius:999px;margin-bottom:14px}
+  h1{font-size:clamp(30px,5vw,54px);line-height:1.12;font-weight:850;letter-spacing:-.02em}
+  h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  h3.sec{font-size:21px;font-weight:800;margin:44px 0 16px;display:flex;align-items:center;gap:10px}
+  h3.sec::before{content:"";width:6px;height:22px;border-radius:4px;background:var(--grad)}
+  .lead{color:var(--dim);font-size:16.5px;max-width:700px;margin-top:12px}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .muted{color:var(--dim)}
+
+  .btn{border:0;border-radius:14px;padding:13px 22px;font-size:15px;font-weight:700;transition:.25s;
+    display:inline-flex;align-items:center;gap:8px}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 24px rgba(79,70,229,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(79,70,229,.45)}
+  .btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);transition:.3s}
+  .card.hover:hover{transform:translateY(-4px)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+
+  /* ===== Home ===== */
+  #hero{position:relative;border-radius:28px;overflow:hidden;background:var(--surface);
+    border:1px solid var(--border);box-shadow:var(--shadow);padding:60px 44px}
+  #particles{position:absolute;inset:0;width:100%;height:100%}
+  .hero-inner{position:relative;z-index:2;max-width:660px}
+  .typing-wrap{min-height:30px;margin-top:16px;font-size:17px;color:var(--dim)}
+  .typing-wrap .caret{display:inline-block;width:2px;height:1.1em;background:var(--accent);
+    vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 26px}
+  .chip{font-size:12.5px;font-weight:600;color:var(--dim);background:var(--surface-2);
+    border:1px solid var(--border);padding:6px 12px;border-radius:999px}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-top:36px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;text-align:center;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:34px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+  .stat span{color:var(--dim);font-size:13px}
+
+  .def-card{display:flex;gap:18px;align-items:flex-start;padding:26px;margin-top:8px}
+  .def-card .big{font-size:40px;line-height:1}
+  .def-card h4{font-size:18px;margin-bottom:6px}
+  .def-card p{color:var(--dim);font-size:14.5px}
+  .def-card .formula{margin-top:12px;font-family:Consolas,monospace;font-size:13.5px;background:var(--surface-2);
+    border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text)}
+
+  /* timeline */
+  .timeline{position:relative;margin-top:8px;padding-left:26px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border)}
+  .tl-item{position:relative;padding:0 0 22px 18px}
+  .tl-item::before{content:"";position:absolute;left:-22px;top:5px;width:12px;height:12px;border-radius:50%;
+    background:var(--grad);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .tl-item b{font-size:15px}
+  .tl-item .yr{color:var(--accent);font-weight:800;font-size:13px;margin-right:8px}
+  .tl-item p{color:var(--dim);font-size:13.5px;margin-top:2px}
+
+  /* feature cards */
+  .feat{padding:22px;cursor:pointer}
+  .feat .ic{width:46px;height:46px;border-radius:13px;background:var(--chip);display:grid;place-items:center;font-size:23px;margin-bottom:12px}
+  .feat h4{font-size:16px;margin-bottom:6px}
+  .feat p{color:var(--dim);font-size:13.5px}
+  .feat .go{color:var(--accent);font-size:13px;font-weight:700;margin-top:10px;display:inline-block}
+
+  /* ===== Matrix ===== */
+  .matrix{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:24px}
+  @media(max-width:860px){.matrix{grid-template-columns:1fr}}
+  .cap-list{display:flex;flex-direction:column;gap:10px}
+  .cap-item{text-align:left;border:1px solid var(--border);background:var(--surface);border-radius:16px;
+    padding:15px 16px;display:flex;align-items:center;gap:12px;transition:.25s}
+  .cap-item:hover{border-color:var(--accent)}
+  .cap-item.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 10px 24px rgba(79,70,229,.35)}
+  .cap-item .n{width:36px;height:36px;border-radius:10px;background:var(--chip);display:grid;place-items:center;font-size:19px;flex-shrink:0}
+  .cap-item.active .n{background:rgba(255,255,255,.2)}
+  .cap-item b{font-size:14.5px;display:block}
+  .cap-item small{font-size:12px;opacity:.75}
+  .cap-detail{padding:28px;min-height:380px}
+  .cap-detail h3{font-size:23px;margin-bottom:10px}
+  .cap-detail .desc{color:var(--dim);font-size:15px;margin-bottom:18px}
+  .cap-sub{font-size:13px;font-weight:800;color:var(--text);margin:16px 0 8px;letter-spacing:.02em}
+  .tags{display:flex;gap:8px;flex-wrap:wrap}
+  .tag{font-size:12.5px;font-weight:600;background:var(--chip);color:var(--accent);padding:5px 12px;border-radius:999px}
+  .eg{background:var(--surface-2);border-left:3px solid var(--accent);border-radius:10px;padding:12px 14px;
+    font-size:13.5px;color:var(--dim);margin-top:6px}
+  .meter-label{display:flex;justify-content:space-between;font-size:13px;color:var(--dim);margin:18px 0 8px}
+  .meter{height:12px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+  .meter-fill{height:100%;width:0;background:var(--grad);border-radius:999px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+
+  /* ===== Architecture ===== */
+  .arch{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;margin-top:24px}
+  @media(max-width:900px){.arch{grid-template-columns:1fr}}
+  .layers{display:flex;flex-direction:column;gap:10px}
+  .layer{border:1.5px solid var(--border);background:var(--surface);border-radius:16px;padding:15px 16px;
+    transition:.25s;cursor:pointer;text-align:left}
+  .layer:hover{border-color:var(--accent);transform:translateX(4px)}
+  .layer.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface));
+    box-shadow:0 8px 22px rgba(79,70,229,.18)}
+  .layer .top{display:flex;align-items:center;gap:11px}
+  .layer .ic{width:36px;height:36px;border-radius:10px;background:var(--chip);display:grid;place-items:center;font-size:19px;flex-shrink:0}
+  .layer b{font-size:15px;display:block}
+  .layer small{color:var(--dim);font-size:12px}
+  .layer .comps{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .layer .cp{font-size:11.5px;background:var(--surface-2);border:1px solid var(--border);color:var(--dim);
+    padding:3px 9px;border-radius:999px}
+  .arch-detail{padding:26px;min-height:360px}
+  .arch-detail h3{font-size:21px;margin-bottom:8px}
+  .arch-detail .role{color:var(--accent);font-weight:700;font-size:13.5px;margin-bottom:12px}
+  .arch-detail p{color:var(--dim);font-size:14.5px;margin-bottom:14px}
+  .arch-detail ul{margin:0 0 6px 18px;color:var(--dim);font-size:13.5px}
+  .arch-detail li{margin-bottom:6px}
+
+  /* ===== Lab ===== */
+  .lab-grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:20px}
+  @media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
+  .cfg{padding:22px}
+  .cfg h4{font-size:15px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--dim);margin-bottom:7px}
+  .field select,.field input[type=text]{width:100%;border:1px solid var(--border);background:var(--surface);
+    color:var(--text);border-radius:12px;padding:11px 13px;font-size:14px;font-family:inherit}
+  .field input[type=range]{width:100%;accent-color:var(--accent)}
+  .field .val{float:right;color:var(--accent);font-weight:800}
+  .seg{display:flex;gap:6px}
+  .seg button{flex:1;border:1px solid var(--border);background:var(--surface);color:var(--dim);
+    padding:9px 4px;border-radius:11px;font-size:12.5px;font-weight:700;transition:.2s}
+  .seg button.on{background:var(--grad);color:#fff;border-color:transparent}
+  .lab-main .lab-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .lab-controls input{flex:1;min-width:220px;border:1px solid var(--border);background:var(--surface);
+    color:var(--text);border-radius:14px;padding:13px 16px;font-size:14.5px;font-family:inherit}
+  .lab-controls input:focus{outline:2px solid var(--accent);border-color:transparent}
+  .presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .preset{border:1px dashed var(--border);background:transparent;color:var(--dim);padding:7px 13px;border-radius:999px;font-size:12.5px;transition:.2s}
+  .preset:hover{border-color:var(--accent);color:var(--accent)}
+  .pipeline{display:flex;gap:9px;align-items:stretch;margin:4px 0 18px;flex-wrap:wrap}
+  .node{flex:1;min-width:132px;background:var(--surface);border:1.5px solid var(--border);border-radius:15px;
+    padding:14px 10px;text-align:center;transition:.4s;position:relative}
+  .node .ic{font-size:24px;display:block;margin-bottom:5px;filter:grayscale(1);opacity:.5;transition:.4s}
+  .node b{font-size:13px;display:block}
+  .node small{color:var(--dim);font-size:11px}
+  .node.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent);transform:translateY(-4px)}
+  .node.on .ic{filter:none;opacity:1}
+  .node.done{border-color:var(--ok)}
+  .node.done::after{content:"✓";position:absolute;top:7px;right:9px;color:var(--ok);font-weight:800;font-size:14px}
+  .terminal{background:#0b1220;border-radius:16px;padding:18px 20px;min-height:230px;font-family:Consolas,"Courier New",monospace;
+    font-size:13px;color:#7ee787;border:1px solid var(--border);overflow:auto;max-height:340px}
+  .terminal .t-head{display:flex;gap:6px;margin-bottom:12px;align-items:center}
+  .terminal .t-head i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .terminal .line{white-space:pre-wrap;margin-bottom:4px;opacity:0;animation:tin .3s forwards}
+  @keyframes tin{to{opacity:1}}
+  .terminal .sys{color:#79c0ff}.terminal .ok{color:#7ee787}.terminal .dim{color:#8b949e}.terminal .warn{color:#f2cc60}
+  .lab-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:16px}
+  .ls{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+  .ls b{display:block;font-size:22px;color:var(--accent);font-variant-numeric:tabular-nums}
+  .ls span{font-size:11.5px;color:var(--dim)}
+  /* 交付结果 */
+  .result{margin-top:16px;padding:22px}
+  .result .r-head{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;margin-bottom:14px;flex-wrap:wrap}
+  .result .tag-ai{font-size:11px;font-weight:800;background:var(--grad);color:#fff;padding:3px 10px;border-radius:999px}
+  .result .r-task{font-size:12.5px;color:var(--dim);font-weight:600;background:var(--surface-2);
+    border:1px solid var(--border);padding:4px 11px;border-radius:999px;max-width:100%;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  .result h4{font-size:16px;margin:14px 0 8px;display:flex;align-items:center;gap:8px}
+  .result h4:first-of-type{margin-top:0}
+  .result p{color:var(--dim);font-size:14px;margin-bottom:10px}
+  .result ul{margin:0 0 12px 4px;list-style:none}
+  .result li{position:relative;padding:6px 0 6px 24px;font-size:14px;color:var(--text);border-bottom:1px dashed var(--border)}
+  .result li:last-child{border-bottom:0}
+  .result li::before{content:"";position:absolute;left:4px;top:13px;width:8px;height:8px;border-radius:3px;background:var(--grad)}
+  .result .callout{background:var(--chip);border-left:3px solid var(--accent);border-radius:10px;
+    padding:12px 14px;font-size:13.5px;color:var(--dim);margin-top:6px}
+  .result .r-actions{display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);flex-wrap:wrap}
+  .result .r-actions button{border:1px solid var(--border);background:var(--surface);color:var(--text);
+    border-radius:11px;padding:9px 15px;font-size:13px;font-weight:700;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+  .result .r-actions button:hover{border-color:var(--accent);color:var(--accent)}
+  .result .r-actions button.copied{color:var(--ok);border-color:var(--ok)}
+  .rv-item{opacity:0;transform:translateY(8px);animation:rvin .5s forwards}
+  @keyframes rvin{to{opacity:1;transform:none}}
+
+  /* ===== Scenarios ===== */
+  .sc-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+  .sc-tab{border:1px solid var(--border);background:var(--surface);color:var(--dim);padding:10px 16px;
+    border-radius:999px;font-size:13.5px;font-weight:700;transition:.2s}
+  .sc-tab:hover{border-color:var(--accent);color:var(--accent)}
+  .sc-tab.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(79,70,229,.3)}
+  .sc-panel{padding:30px}
+  .sc-panel .head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .sc-panel .head .ic{width:52px;height:52px;border-radius:14px;background:var(--chip);display:grid;place-items:center;font-size:27px}
+  .sc-panel h3{font-size:22px}
+  .sc-panel .sub{color:var(--dim);font-size:13.5px}
+  .sc-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;margin-top:8px}
+  @media(max-width:800px){.sc-cols{grid-template-columns:1fr}}
+  .sc-panel p{color:var(--dim);font-size:14.5px;margin-bottom:14px}
+  .sc-steps{display:flex;flex-direction:column;gap:9px}
+  .sc-step{display:flex;gap:11px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--border);
+    border-radius:12px;padding:11px 13px;font-size:13.5px}
+  .sc-step .k{flex-shrink:0;width:22px;height:22px;border-radius:7px;background:var(--grad);color:#fff;
+    display:grid;place-items:center;font-size:12px;font-weight:800}
+  .sc-meta h5{font-size:13px;font-weight:800;color:var(--text);margin:14px 0 8px}
+  .sc-meta .prods{display:flex;gap:8px;flex-wrap:wrap}
+  .sc-meta .prod{font-size:12.5px;background:var(--chip);color:var(--accent);border:1px solid var(--border);
+    padding:6px 12px;border-radius:999px;font-weight:600}
+  .kpi{display:flex;gap:18px;margin-top:6px}
+  .kpi div b{display:block;font-size:22px;color:var(--accent)}
+  .kpi div span{font-size:11.5px;color:var(--dim)}
+
+  /* ===== Dashboard ===== */
+  .insight-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:20px 0 6px}
+  .ins-card{padding:18px;display:flex;gap:12px;align-items:flex-start}
+  .ins-card .ic{font-size:24px}
+  .ins-card b{font-size:14px;display:block;margin-bottom:3px}
+  .ins-card p{font-size:12.5px;color:var(--dim)}
+  .dash-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
+  @media(min-width:920px){.dash-grid{grid-template-columns:1fr 1fr}}
+  .chart-card{padding:22px}
+  .chart-card h3{font-size:16px;margin-bottom:2px}
+  .chart-card small{color:var(--dim);font-size:12.5px}
+  .chart-card canvas{width:100%;height:270px;display:block;margin-top:14px;cursor:crosshair}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+  .legend span{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  #tooltip{position:fixed;pointer-events:none;background:var(--text);color:var(--bg);padding:7px 11px;border-radius:9px;
+    font-size:12.5px;font-weight:600;opacity:0;transition:opacity .15s;z-index:99;white-space:nowrap;box-shadow:var(--shadow)}
+
+  /* ===== Quiz ===== */
+  .quiz-wrap{max-width:720px;margin:22px auto 0}
+  .q-progress{height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-bottom:8px}
+  .q-progress i{display:block;height:100%;width:0;background:var(--grad);transition:width .4s}
+  .q-meta{display:flex;justify-content:space-between;color:var(--dim);font-size:13px;margin-bottom:18px}
+  .q-card{padding:28px}
+  .q-top{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+  .q-diff{font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px}
+  .d-easy{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+  .d-mid{background:color-mix(in srgb,var(--amber) 15%,transparent);color:var(--amber)}
+  .d-hard{background:color-mix(in srgb,var(--warn) 15%,transparent);color:var(--warn)}
+  .q-cat{font-size:11.5px;color:var(--dim);background:var(--surface-2);padding:3px 10px;border-radius:999px}
+  .q-text{font-size:18.5px;font-weight:700;margin-bottom:18px}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--border);background:var(--surface);
+    color:var(--text);border-radius:14px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;transition:.2s}
+  .opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(4px)}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+  .opt.wrong{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,var(--surface))}
+  .opt .mark{float:right;font-weight:800}
+  .explain{background:var(--surface-2);border-left:3px solid var(--accent);border-radius:10px;padding:12px 14px;
+    font-size:13.5px;color:var(--dim);margin:8px 0 14px;display:none}
+  .explain.show{display:block}
+  .q-feedback{font-size:14px;margin:4px 0 4px;min-height:20px;font-weight:700}
+  .q-feedback.ok{color:var(--ok)}.q-feedback.no{color:var(--warn)}
+  .q-foot{display:flex;justify-content:flex-end;margin-top:8px}
+  .score-box{text-align:center;padding:36px 26px}
+  .score-num{font-size:66px;font-weight:850;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .score-grade{font-size:16px;font-weight:800;margin-top:2px}
+  .score-msg{color:var(--dim);margin:10px 0 20px}
+  .review{margin-top:20px;text-align:left}
+  .review h4{font-size:15px;margin-bottom:10px}
+  .rv{border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:9px;font-size:13px}
+  .rv .qq{font-weight:700;margin-bottom:4px}
+  .rv .aa{color:var(--ok)}.rv .ww{color:var(--warn)}
+  .rv .ex{color:var(--dim);font-size:12.5px;margin-top:4px}
+
+  footer{border-top:1px solid var(--border);padding:30px 22px;color:var(--dim);font-size:13px}
+  footer .f-in{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  footer b{color:var(--text)}
+  #toTop{position:fixed;bottom:22px;right:22px;z-index:55;width:44px;height:44px;border-radius:13px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text);font-size:18px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s}
+  #toTop.show{opacity:1;pointer-events:auto}
+
+  #guide{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:60;max-width:420px;width:calc(100% - 32px);
+    background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px;animation:fade .5s}
+  #guide h4{font-size:14.5px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  #guide p{font-size:12.5px;color:var(--dim);margin-bottom:12px}
+  #guide .row{display:flex;gap:8px}
+  #guide button{flex:1;border:0;border-radius:10px;padding:8px;font-size:12.5px;font-weight:700}
+  #guide .got{background:var(--grad);color:#fff}
+  #guide .skip{background:var(--surface-2);color:var(--dim)}
+</style>
+</head>
+<body data-page-node-id="RwbqoEdfxAmcp9HGoXHonH">
+
+<nav class="nav" data-page-node-id="24xqUpDEzjZSIHEps9eWeZ"><div class="nav-in" data-page-node-id="NqpH1iV7z81QiL8O9MUqIo">
+  <div class="logo" data-page-node-id="XbhIU1hFIYVC2Xd2KqEK0s"><span class="dot" data-page-node-id="Q4Wfq5kdszimgVNlJBhCFD">◈</span>智核</div>
+  <div class="nav-links" id="navLinks" data-page-node-id="nK2ZoW1lfny66HxUqqE1FL">
+    <button data-go="home" class="active" data-page-node-id="UHWTNwMVgfx4Z3kddxVOjc">首页</button>
+    <button data-go="matrix" data-page-node-id="FCxnZomn0PZoutTGu9ujUP">能力图谱</button>
+    <button data-go="arch" data-page-node-id="nBXjRFxvCGJPMoIzo0t9it">技术架构</button>
+    <button data-go="lab" data-page-node-id="9ARjRrrLc8vHoBQGRzGYhE">工作流实验室</button>
+    <button data-go="scenes" data-page-node-id="rA0bbwaQ8vAtMYAATEdIBZ">应用场景</button>
+    <button data-go="dashboard" data-page-node-id="MgsifWEEqzqB3owzMWPNdx">数据面板</button>
+    <button data-go="quiz" data-page-node-id="hdozki3ngLRVQhIZZkY42X">知识测验</button>
+  </div>
+  <button class="theme-btn" id="themeBtn" title="切换明暗主题" data-page-node-id="2wIsUcZHgwAS0GCLHJUcY4">🌙</button>
+</div></nav>
+
+<!-- ================= 首页 ================= -->
+<section class="page active" id="page-home" data-page-node-id="I9gaHM4VRPg9BqHN01GH7s"><div class="wrap" data-page-node-id="mEawN304lcx01sIDYhxUAt">
+  <div id="hero" data-page-node-id="kEeFDqyD3wmlDdBuOeW2fp">
+    <canvas id="particles" data-page-node-id="E9bab2lwzir1vXuFwXclMe"></canvas>
+    <div class="hero-inner" data-page-node-id="ulV8IkhlrZOwyE6xE5Qf6I">
+      <span class="eyebrow" data-page-node-id="AYXIDKK5aKrgA1bDlRjGni">2026 · 当下最火的技术主线</span>
+      <h1 data-page-node-id="FNUCHTa3jBVRhgo6O3hPDp">你好，我是<br data-page-node-id="5l3J1OeVKZYfjkEgIAOV4G"><span class="grad-text" data-page-node-id="i3Mo9R3O3DK6GrgCPWRhef">AI 智能体</span></h1>
+      <div class="typing-wrap" data-page-node-id="DOfGU60zMfgdsNQCXnrcDI"><span id="typeTxt" data-page-node-id="cNpNQHNyzquZEts4PjHwvk"></span><span class="caret" data-page-node-id="AIOBG2oppWbZ59VKR9qHfC"></span></div>
+      <div class="chips" data-page-node-id="dHkS6WAUwbgJPKjtdWBF6a">
+        <span class="chip" data-page-node-id="sTGoG1sEkxaO7olOvssd9C">⚡ 7 个交互页面</span>
+        <span class="chip" data-page-node-id="gPfHhxnvT4Fw2WjbV7FdCO">🧩 纯前端 · 零依赖</span>
+        <span class="chip" data-page-node-id="uXBKlQGMY9MAITyfQ9oYKm">📊 4 种手绘图表</span>
+        <span class="chip" data-page-node-id="Knqa0Oi5FrsF7b2eXssmE6">🌗 明暗双主题</span>
+      </div>
+      <div class="hero-cta" data-page-node-id="bIhEQ6pF4NAe9p1MqsHSFY">
+        <button class="btn btn-primary" data-go="lab" data-page-node-id="wUh0JAoMzNMONp96KqWvWv">▶ 进入工作流实验室</button>
+        <button class="btn btn-ghost" data-go="matrix" data-page-node-id="S4jUit42U4s3oyz8bFp9Fq">先看看我能做什么</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats" data-page-node-id="hegHEOrn2FQaHVP3JR2ACc">
+    <div class="stat" data-page-node-id="pOTKPzNK7gJ2jVwKjaj59T"><b data-count="7" data-page-node-id="djNr90H4qRxUNO86lFsWF2">0</b><span data-page-node-id="tkjtFcY6ZxCqcvy6IAiS0T">可交互页面</span></div>
+    <div class="stat" data-page-node-id="v26k4HWgxsvL9hn3aHSdeE"><b data-count="6" data-page-node-id="cPb5KI3qweF9KAAfw2rTtd">0</b><span data-page-node-id="cHOzJcUeCGAXTmilva9Er5">核心能力拆解</span></div>
+    <div class="stat" data-page-node-id="s7q1DLKMgkIOmySljAFEZ8"><b data-count="10" data-page-node-id="lfJVTUGi8O08aptHnvP9Ym">0</b><span data-page-node-id="Td1i4DUaoL8lXnrtxVX4lP">道精选测验题</span></div>
+    <div class="stat" data-page-node-id="SzSMwfD8xAyJnADaWqTM8K"><b data-count="4" data-page-node-id="GJyryWe21qjLGV5pW2xAnP">0</b><span data-page-node-id="pEwHhvtFY0AMkVDo05B7eT">类数据可视化</span></div>
+  </div>
+
+  <h3 class="sec" data-page-node-id="sRCj5wCClsd9QgAB0q9WSP">什么是 AI 智能体？</h3>
+  <div class="card def-card" data-page-node-id="NkEC31SbQgfAW8ELcHGPES">
+    <div class="big" data-page-node-id="Avi74Z3SwlJ0UNyB6A3dp9">🤖</div>
+    <div style="flex:1" data-page-node-id="UWCFe7rnJu1x6d91BQf4RL">
+      <h4 data-page-node-id="HtFnLFf74Um8tIMdVaVhQc">从"会聊"到"会做"的跨越</h4>
+      <p data-page-node-id="veFkzAsn2i44jBkrwK23zY">AI 智能体（AI Agent）是一种能<b data-page-node-id="t8K4IGcnllrb7479bALsd7">感知环境、自主规划、调用工具、记住上下文并持续行动</b>，最终把一个开放式目标"做完"的人工智能系统。它不只是回答一个问题，而是像一位见习员工一样：听懂需求 → 拆解步骤 → 动手调用各种工具 → 检查结果 → 交付成果。</p>
+      <div class="formula" data-page-node-id="m1dF8NnawnFMHrEEQcD2PU">智能体 = 大模型（大脑） + 规划（拆解） + 记忆（上下文） + 工具（手脚） + 反思（纠错）</div>
+    </div>
+  </div>
+
+  <h3 class="sec" data-page-node-id="VTfFrMnsFsMI4Xd2NbVaP9">四大核心特征</h3>
+  <div class="grid g4" data-page-node-id="xK1pvNbFzBBAhNS4lMzTrZ">
+    <div class="card hover feat" data-go="matrix" data-page-node-id="2aA2bqrwHinQyQt3ry3wke"><div class="ic" data-page-node-id="lmirqSd7jkX2PoBDMB0rKG">🎯</div><h4 data-page-node-id="UYTcvayBXf7lomCKC2k0bh">自主性</h4><p data-page-node-id="tyD8hUHwRboZSGuF4rPcj1">无需步步指令，给定目标即可自主推进。</p></div>
+    <div class="card hover feat" data-go="arch" data-page-node-id="pRkEwLtbmHguSVVURzGQA1"><div class="ic" data-page-node-id="uatAFZWcvEcALEGb3rJNS7">🔧</div><h4 data-page-node-id="9WziSMi9O06wMWWMko0BUb">工具使用</h4><p data-page-node-id="DYv71dXBB3sgdIOnSaS8oF">会调用搜索、代码、API 等外部能力。</p></div>
+    <div class="card hover feat" data-go="lab" data-page-node-id="XX8VEN25y0yAaUYPQy5aQ9"><div class="ic" data-page-node-id="76lhida5ggSS1WajDF99GF">🔁</div><h4 data-page-node-id="HbkyXB2nAHFnFSbmu2MFQ9">闭环执行</h4><p data-page-node-id="wM96wzvdV6gmQ6HDlZqImb">感知→规划→行动→观察，循环直至完成。</p></div>
+    <div class="card hover feat" data-go="scenes" data-page-node-id="Rn4kZzX9qUm2Ruk21WdrX1"><div class="ic" data-page-node-id="j5xKfrhjL5bIzW1f6uwDiA">🧠</div><h4 data-page-node-id="JErUfjc2cn1IUg0YnZBhWv">持续学习</h4><p data-page-node-id="idpknGi90FDGYbUvu83DQv">借助记忆与反思，越用越懂你。</p></div>
+  </div>
+
+  <h3 class="sec" data-page-node-id="yhqUr1cerUuovscMuS3veA">智能体发展简史</h3>
+  <div class="card" style="padding:26px 26px 8px" data-page-node-id="dXMhIQQ43DGDNlhmgK7tDw">
+    <div class="timeline" data-page-node-id="IYR7CN4EdHRXwDhCYCNjsu">
+      <div class="tl-item" data-page-node-id="3KPVMOYla6eTknRF8xo4vY"><b data-page-node-id="cTiGEueOTmm6GQ3kWhUvm6"><span class="yr" data-page-node-id="ooQ1h3sg9DZyts9B345P8Q">2016</span>强化学习智能体</b><p data-page-node-id="10L8furMETDSXzJLP6wtr2">AlphaGo 击败人类冠军，"智能体"概念进入大众视野，但只能在封闭规则下行动。</p></div>
+      <div class="tl-item" data-page-node-id="qApfmi46q2rDIReyHy6pDg"><b data-page-node-id="H94hKkxKD7BwbOLaS5xpA6"><span class="yr" data-page-node-id="RPLIzGJwlpSYK6pIhe65Ha">2022</span>大模型浪潮</b><p data-page-node-id="FA0M7tAk0xEMMKEDSbVUwf">ChatGPT 发布，LLM 展现出强大的语言与推理能力，成为智能体的"大脑"。</p></div>
+      <div class="tl-item" data-page-node-id="hlsp4OLxsCFDT3m9B8q6Eu"><b data-page-node-id="1wogk1yV55eQAZXVxOYvv8"><span class="yr" data-page-node-id="2EM8OdDzHH3Wqc5ndmfPjG">2023</span>AutoGPT 引爆</b><p data-page-node-id="oXqCpV8RgEPnK0cjKy36q5">AutoGPT、BabyAGI 等让"自主拆解任务"走红，ReAct、Function Calling 成为标配。</p></div>
+      <div class="tl-item" data-page-node-id="bdQolaLcEX4jCOhxdeoC1G"><b data-page-node-id="nRyJMzmlXyKEFkbE4ChcMr"><span class="yr" data-page-node-id="kDBCSFm9twz80nzXbAe0JX">2024</span>工程化落地</b><p data-page-node-id="HzyrFcysxEDWAGPHQFtPTm">LangGraph、AutoGen 等框架成熟，多智能体协作与 MCP 协议让工具调用标准化。</p></div>
+      <div class="tl-item" data-page-node-id="739RvO3FvVVD3rhjWqr2W9"><b data-page-node-id="RjmjAHYDj5kNR8WXe9z3Iv"><span class="yr" data-page-node-id="ro6QLYMwSrZyAmIa4kOzC5">2026</span>智能体元年</b><p data-page-node-id="22PKqAIBgFHTEOr7VP9QfL">从办公到编程、从客服到分析，智能体开始规模化"上岗"，成为 AI 落地的主形态。</p></div>
+    </div>
+  </div>
+
+  <h3 class="sec" data-page-node-id="v7QZ4eCfVEmtE58H7v5i7h">开始探索</h3>
+  <div class="grid g4" data-page-node-id="zqwUtbUbaGsK6s55LLWgwD">
+    <div class="card hover feat" data-go="matrix" data-page-node-id="wV2Flgia6zinhmcmidBhFx"><div class="ic" data-page-node-id="rH7EtEmCOVJiCxN1Q3uatt">🧠</div><h4 data-page-node-id="fyODTvdLpkEVeK36Gn7ypA">能力图谱</h4><p data-page-node-id="dmIXHU2oDWJkxDpdKc5j0I">点开六大核心能力，看关键技术与应用。</p><span class="go" data-page-node-id="A3TjJ2SsTDfO2AZ5bEBOda">去探索 →</span></div>
+    <div class="card hover feat" data-go="arch" data-page-node-id="5wwBpubzrEedF16PegrWWR"><div class="ic" data-page-node-id="qKZJTyOUHBDB93EQ0OrQA9">🏗️</div><h4 data-page-node-id="l3AIQkHMaEivDD3pHGgq6F">技术架构</h4><p data-page-node-id="xdnY2ECoPyBPkXVDzC2IoD">逐层拆解一个智能体的内部结构。</p><span class="go" data-page-node-id="3o4IF3rnohiF4UyWFz0ZZw">去拆解 →</span></div>
+    <div class="card hover feat" data-go="lab" data-page-node-id="qhzdz2D6Sep700xXMs5ZJB"><div class="ic" data-page-node-id="KYEPFLoAG03UGameGGgCL0">⚙️</div><h4 data-page-node-id="TzpkdiiR3J7vkO99SBTZiw">工作流实验室</h4><p data-page-node-id="SOkjFj7n88w7z6God2rT7F">亲手配置并运行一个智能体。</p><span class="go" data-page-node-id="vKR0DSh8l0gEGJaEgYG74C">去运行 →</span></div>
+    <div class="card hover feat" data-go="quiz" data-page-node-id="GGBzLFAdmIfeOWnS8rzekN"><div class="ic" data-page-node-id="adEV3mNihsoorOCXEw2cKI">🎯</div><h4 data-page-node-id="uvKSy2nBBFCzl3Di7D60Om">知识测验</h4><p data-page-node-id="IgBBrByOKmUEA8ahJOEAcC">10 道题，检验你的掌握程度。</p><span class="go" data-page-node-id="Zj660Pk4j39ZwhLbGdTsSc">去挑战 →</span></div>
+  </div>
+</div></section>
+
+<!-- ================= 能力图谱 ================= -->
+<section class="page" id="page-matrix" data-page-node-id="6R4873GLWnphGbJzSSRvAo"><div class="wrap" data-page-node-id="9IczQMHW7RqJZod94NWrss">
+  <span class="eyebrow" data-page-node-id="Qy7lVkPDvtczeSaacNpQBA">Capabilities</span>
+  <h2 data-page-node-id="3aW9vLI2bOLVfnRn4E2tr2">智能体的<span class="grad-text" data-page-node-id="Xo9slWdZ1kTNgqjb4t8I6h">六大核心能力</span></h2>
+  <p class="lead" data-page-node-id="BkuNla6uuQ0b9601AAp6h3">点击左侧任意能力，右侧展开它的详细说明、关键技术、典型应用与重要度评分。</p>
+  <div class="matrix" data-page-node-id="lCVq3v2qe5VCvm7yFkBRG6">
+    <div class="cap-list" id="capList" data-page-node-id="GWFL0m8pGRF7hkRemxsRcS"></div>
+    <div class="card cap-detail" id="capDetail" data-page-node-id="oMR81dd83ATzGhIJxYdLAf"></div>
+  </div>
+</div></section>
+
+<!-- ================= 技术架构 ================= -->
+<section class="page" id="page-arch" data-page-node-id="lLVMV4C2J5FZp0NInGKMtD"><div class="wrap" data-page-node-id="WUxhK2ZFHEUtIFUtkuEfqg">
+  <span class="eyebrow" data-page-node-id="wDKJ7ueAaWWDRYQXzgrMum">Architecture</span>
+  <h2 data-page-node-id="b0qC7X02JOhCrsoThfOmV3">一个智能体的<span class="grad-text" data-page-node-id="dcqVBMjW56txU0y9cFE0io">技术架构</span></h2>
+  <p class="lead" data-page-node-id="kceNgore1bMtifwl3U2GEs">点击左侧任意一层，了解它在整个系统里的职责、关键组件与设计要点。自上而下，正是"需求进来、结果出去"的完整链路。</p>
+  <div class="arch" data-page-node-id="EDflvfBMeUrLYBYboCLfvA">
+    <div class="layers" id="archLayers" data-page-node-id="UQgBggv71bDSSAvl0Q8hBj"></div>
+    <div class="card arch-detail" id="archDetail" data-page-node-id="EJPUUp993tBem7Ah7B02o9"></div>
+  </div>
+</div></section>
+
+<!-- ================= 工作流实验室 ================= -->
+<section class="page" id="page-lab" data-page-node-id="AJVZUCaglNo0WaTJQloks6"><div class="wrap" data-page-node-id="VLcmitupnYBKBITeo6f8i6">
+  <span class="eyebrow" data-page-node-id="p0OHrfPGhF3t2jFpYS0nJE">Agent Lab</span>
+  <h2 data-page-node-id="0JsqLXGRLzgZrIFtV5O8oB">工作流<span class="grad-text" data-page-node-id="JaKwLoxG3Wb1Px5x2GtwMW">实验室</span></h2>
+  <p class="lead" data-page-node-id="BqkVKkqhOtLimCcQBZFvrw">在左侧配置你的智能体，输入任务后点击「运行」，右侧会实时展示它分五步把任务做完的完整过程与运行统计。</p>
+
+  <div class="lab-grid" data-page-node-id="9j2yuxxOc1HPiGrniOHk1V">
+    <div class="card cfg" data-page-node-id="zEMHOavgalQgMD6LfQgGzV">
+      <h4 data-page-node-id="fLwaNlB5KFqGcoDkoUAUTh">⚙️ 智能体配置</h4>
+      <div class="field" data-page-node-id="PaczD3GDVJ7DG8Lu4U3x2c">
+        <label data-page-node-id="VWCoY54GcLVMvkY0Pn1qBH">模型</label>
+        <div class="seg" id="modelSeg" data-page-node-id="jKLIaBMrF2sy6zihfVXBCJ">
+          <button data-v="智核-1" class="on" data-page-node-id="occKH0Cm9cQ01x9roXQU7M">智核-1</button>
+          <button data-v="智核-1 Pro" data-page-node-id="fJAkIMGUNCEzDIqFdOFjDo">1 Pro</button>
+          <button data-v="智核-2" data-page-node-id="XvXVEP65cDm3EGLX2U3BMD">智核-2</button>
+        </div>
+      </div>
+      <div class="field" data-page-node-id="D7HCjiCG277ByPIHgnOFUG">
+        <label data-page-node-id="vs6dhO7bddKQFGJWB5LCo9">创造力（温度）<span class="val" id="tempVal" data-page-node-id="ldXpCh8hlBPx3kBxFxAX8B">0.7</span></label>
+        <input type="range" id="tempRange" min="0" max="1" step="0.1" value="0.7" data-page-node-id="kVvvrsSrttbip5cCzYR9jV">
+      </div>
+      <div class="field" data-page-node-id="xoiIuk3fYG0cADSjAdNmqG">
+        <label data-page-node-id="ipIgHoFpG2QNstRDl5bTlf">最大步数<span class="val" id="stepVal" data-page-node-id="nBbYe5HKhXLLPMJB1F8DQI">5</span></label>
+        <input type="range" id="stepRange" min="3" max="8" step="1" value="5" data-page-node-id="OVybYmBv52Td3WI9FKAx42">
+      </div>
+      <div class="field" data-page-node-id="MJdUURAnnUXxiKVIROvhBq">
+        <label data-page-node-id="t0R20GzEvoFYtW3QceUnJ5">可用工具</label>
+        <div class="chips" style="margin:0" data-page-node-id="FL2FvCJ61ZOzyIPSLrxv5H">
+          <span class="chip" data-page-node-id="R27fUKPxTsADreC60oR8rW">🔍 搜索</span><span class="chip" data-page-node-id="e47fDzMsWJtEh4iaqQ8YtH">💻 代码</span>
+          <span class="chip" data-page-node-id="QVgyGfr1wwKOECCaFfGPY8">🌐 浏览器</span><span class="chip" data-page-node-id="KNvg03WVsj6KrhJiwM0o1j">🗄️ 数据库</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-main" data-page-node-id="HS6UIMn9I2X7Mlx67BzOiq">
+      <div class="lab-controls" data-page-node-id="MDUTC7kpYVbNg98BpePfk2">
+        <input id="taskInput" placeholder="例如：帮我规划一次周末去杭州的短途旅行" value="帮我整理一份 2026 年 AI 行业趋势简报" data-page-node-id="2rp2taBMe5NT7gWsmNBRUO">
+        <button class="btn btn-primary" id="runBtn" data-page-node-id="eqjEwaglVaycB52Sv5pFvt">▶ 运行智能体</button>
+        <button class="btn btn-ghost" id="resetBtn" data-page-node-id="YrDJmH7Y2xe7b52uvXemHi">↺ 重置</button>
+      </div>
+      <div class="presets" data-page-node-id="mtGD1QAiDwrmTvIY7hocMk">
+        <span style="font-size:12.5px;color:var(--dim);align-self:center" data-page-node-id="OD0AzHYa0sND6UZnUf7DOJ">试试：</span>
+        <button class="preset" data-page-node-id="GuVjEh0D5cY80LoOv5qMWF">规划一次周末去杭州的短途旅行</button>
+        <button class="preset" data-page-node-id="ixdGoiLgff8efbB7HJmkDB">把这周会议纪要总结成 5 条待办</button>
+        <button class="preset" data-page-node-id="VuNa1izScER9K3r0dYnouY">对比三款热门耳机并给出购买建议</button>
+      </div>
+      <div class="pipeline" id="pipeline" data-page-node-id="BtRqqYp1mN2r22HlH8le6T"></div>
+      <div class="terminal" id="terminal" data-page-node-id="FOlrzCBoFmFTN3PevYpUTC">
+        <div class="t-head" data-page-node-id="CyyP4kBrustQRkSrmuGqT3"><i style="background:#ff5f57" data-page-node-id="H1sR3w2lFXte2Begy9jYTx"></i><i style="background:#febc2e" data-page-node-id="R6fOGwIpjYfWZ2xGvl3syz"></i><i style="background:#28c840" data-page-node-id="yRwQ6INXD7FK3VnTYNlrj3"></i>
+          <span style="color:#8b949e;font-size:12px;margin-left:8px" id="termTitle" data-page-node-id="6OPxed4EW5blic1ckNBg7j">agent@zhike:~ 运行日志</span></div>
+        <div id="termBody" data-page-node-id="JoSyM3rHjovv3C4iV9lENf"><div class="line dim" data-page-node-id="2czGNE1JVA0DfbWDcpy5q8">// 待命中… 配置好智能体后点击「运行智能体」</div></div>
+      </div>
+      <div class="lab-stats" id="labStats" style="display:none" data-page-node-id="5wYDCIYDEcSDDskOAyXPNm">
+        <div class="ls" data-page-node-id="6pfxxSFGbbOI7b3c4vJRYU"><b id="stTime" data-page-node-id="NdmWKUTt6KdkNEU2qnFsII">-</b><span data-page-node-id="nLIHUiMhr3lF4m6OfxraFV">总耗时</span></div>
+        <div class="ls" data-page-node-id="NvS5mHAm2cCRf5Og90Ma4E"><b id="stStep" data-page-node-id="8C3jZXSBU6YWCD0SkuA2YY">-</b><span data-page-node-id="FetQhNzuMzHDel6Ud2lmyg">执行步骤</span></div>
+        <div class="ls" data-page-node-id="CQXAROUUGTrenuiriRc33f"><b id="stTool" data-page-node-id="0lygOwkbUWoMhJbEd5EHlR">-</b><span data-page-node-id="9AeG20MyAQ1f9LufRqi9Vt">工具调用</span></div>
+        <div class="ls" data-page-node-id="uAfOj1CzDsDwZSWNa6uokT"><b id="stToken" data-page-node-id="7DYFxADPCfUY0ERi1fDzW7">-</b><span data-page-node-id="RFsTIRDEci8raP0fXlOwja">消耗 Token</span></div>
+      </div>
+
+      <div class="card result" id="resultCard" style="display:none">
+        <div class="r-head">📦 交付结果 <span class="tag-ai">AI 生成</span> <span class="r-task" id="rTask"></span></div>
+        <div id="resultBody"></div>
+        <div class="r-actions">
+          <button id="copyBtn">📋 复制结果</button>
+          <button id="dlBtn">⬇️ 下载 Markdown</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= 应用场景 ================= -->
+<section class="page" id="page-scenes" data-page-node-id="FbphfpX77tYaYD5fPL2Ztn"><div class="wrap" data-page-node-id="JtSpCpTzVLeyB2Hl3HB1l6">
+  <span class="eyebrow" data-page-node-id="LzDJo4AB3rccS7WrtM9zZ2">Use Cases</span>
+  <h2 data-page-node-id="rQR16HuZ2fhJlGNDDLD2y0">智能体<span class="grad-text" data-page-node-id="OOWzQdSQInJ1ARfLV6YLDN">应用场景</span></h2>
+  <p class="lead" data-page-node-id="tfTEc5TgwToWuvppAQbAwF">切换下方标签，看看智能体正在哪些领域"上岗"，以及它是如何一步步完成真实任务的。</p>
+  <div class="sc-tabs" id="scTabs" data-page-node-id="oI50V3sy0IdMahn5dWDQDF"></div>
+  <div class="card sc-panel" id="scPanel" data-page-node-id="UeYNYIDSuc3Bhdw1SzF6HN"></div>
+</div></section>
+
+<!-- ================= 数据面板 ================= -->
+<section class="page" id="page-dashboard" data-page-node-id="Mhn1yhR4qRbE5Y7o7lYIWL"><div class="wrap" data-page-node-id="KdEm0C4As3F6kODKvCnpoZ">
+  <span class="eyebrow" data-page-node-id="eEYymXeNvoFOB1gegBFfqb">Insights</span>
+  <h2 data-page-node-id="AAd2YOBL7UBLIEoaGANEje">智能体<span class="grad-text" data-page-node-id="xiLq0MesRRaLev4P3zChmu">数据面板</span></h2>
+  <p class="lead" data-page-node-id="1yfFWn6OD5ZW2gJQlRPYWe">把鼠标悬停到图表的柱子、节点或扇区上，可查看具体数值。四张图从不同维度勾勒智能体赛道。</p>
+
+  <div class="insight-row" data-page-node-id="kgP7jkpvgiHDrmtF285z8v">
+    <div class="card ins-card" data-page-node-id="ASKZIeTwFoPEEOiGt50G3L"><span class="ic" data-page-node-id="8PnQIFGLWJuKDFhcJsSJCx">🚀</span><div data-page-node-id="GEkqAgWTfJl3fM4dR9gUHr"><b data-page-node-id="NaXGp6AHC7hnQ14JhQJi0G">落地最快的行业</b><p data-page-node-id="eCCQO1F9GthZvnntt4wtZd">互联网与金融领跑，采用率均超 50%。</p></div></div>
+    <div class="card ins-card" data-page-node-id="euQYBXnWZavLDZryFngLRj"><span class="ic" data-page-node-id="CkRsM5SPZm0AxBKqCx5BMf">📈</span><div data-page-node-id="kKmH2dmza2yUokSDC1WbZN"><b data-page-node-id="UQJqw4el2Ea30Jd32lqhtX">五年增长约 10 倍</b><p data-page-node-id="mW3fb8zt198xt2CpttYf4r">市场规模从 32 亿增至 328 亿美元。</p></div></div>
+    <div class="card ins-card" data-page-node-id="BZC6tLCoCLTo5SENyBDoAu"><span class="ic" data-page-node-id="uEXVCYTLsA2CyBbNRxRrRH">🧰</span><div data-page-node-id="PuBS8HHxTFH5UJSdhBRM1I"><b data-page-node-id="A5V2LWk67WGPgJ8VEQfDUM">框架趋于集中</b><p data-page-node-id="TBuPkzlVLWWd2YRVzJZn1t">LangChain 系占据约三分之一关注度。</p></div></div>
+    <div class="card ins-card" data-page-node-id="YTICuMiEQ6Xrbt1Fjc0OzA"><span class="ic" data-page-node-id="rxUMkzmbCplXr9Tf3QQf8g">🧠</span><div data-page-node-id="HUT44IEn14VCkhWvBFCOIn"><b data-page-node-id="3JQEyru2yhLemHYfbzXm8w">工具调用最关键</b><p data-page-node-id="hMbAyE1XatGrr7HFqm9RCZ">六大能力中"工具使用"重要度最高。</p></div></div>
+  </div>
+
+  <div class="dash-grid" data-page-node-id="kzCPiCRbLyE80ysGo3wXeN">
+    <div class="card chart-card" data-page-node-id="OpXuCFP54Hqg0QIuE6cPjt"><h3 data-page-node-id="N3iicrZe0qZiAHUO1VAwJH">各行业 AI 智能体采用率（2026）</h3><small data-page-node-id="9w0aTzkxDsTUYpHoOTfEAO">单位：% · 悬停查看</small><canvas id="barChart" data-page-node-id="pQE3TZyAuKZFx0d4QTTpbA"></canvas></div>
+    <div class="card chart-card" data-page-node-id="aRfwpUBP2gumFSDjd6qyPl"><h3 data-page-node-id="k2GdXDlBIs0UawyLlQ0iZR">全球 AI 智能体市场规模（2021–2026）</h3><small data-page-node-id="GvPzVdHBwIwcq6apKFAgt5">单位：十亿美元 · 悬停查看</small><canvas id="lineChart" data-page-node-id="dRDy2ni7YDI9fkOMGEAoqV"></canvas></div>
+    <div class="card chart-card" data-page-node-id="UM7qW2GCA2OMYERENGr0jV"><h3 data-page-node-id="ZHjV9d7QXlm1n41jvtr9Hp">主流智能体框架关注度</h3><small data-page-node-id="o25RrpVhCLCua9FHTTI4e6">占比 % · 悬停查看</small><canvas id="donutChart" data-page-node-id="qjGAVFbjhBbs4iNNI6Be8b"></canvas><div class="legend" id="donutLegend" data-page-node-id="dla4wUokkROGqSMbnKjFml"></div></div>
+    <div class="card chart-card" data-page-node-id="MPXCItkky6GhPSk6gawLce"><h3 data-page-node-id="BZWN7EjEVuccCnDfWOYujj">六大能力重要度雷达</h3><small data-page-node-id="NQP1WAgogNL9slXG8Qv3FE">0–100 · 越靠外越重要</small><canvas id="radarChart" data-page-node-id="GMv8MTCdwB7PhvDFJ30LT1"></canvas></div>
+  </div>
+</div></section>
+
+<!-- ================= 知识测验 ================= -->
+<section class="page" id="page-quiz" data-page-node-id="cl2guZQtF5gzTweigMH7ph"><div class="wrap" data-page-node-id="Hr7jNsUBZJNj35KwgSvdIx">
+  <span class="eyebrow" data-page-node-id="oEbBEEBrPicOYiPVnE9tMN">Quiz</span>
+  <h2 data-page-node-id="C5OgzrCudAJBVbQBf6QL9Q">智能体<span class="grad-text" data-page-node-id="jL1VCmppkSHQRkDU8qq4Zy">知识测验</span></h2>
+  <p class="lead" data-page-node-id="RYzUHFymV7rDp7E7qTmHhs">10 道题，覆盖概念、架构与框架，答完立即判分并附解析，最后可回顾每一道题。</p>
+  <div class="quiz-wrap" data-page-node-id="YvfgWvtM2sadaymaS6F7ji">
+    <div class="q-progress" data-page-node-id="K5hvoYrMKtrtm8SpXrxuaD"><i id="qBar" data-page-node-id="nUZHUPyNGYx6ii56pGimX5"></i></div>
+    <div class="q-meta" data-page-node-id="UeLAWjS5pOZRtEipWC0acL"><span id="qStep" data-page-node-id="9bYzpfItdoX6mL6gIDoKVI">第 1 / 10 题</span><span id="qScore" data-page-node-id="XIgZibsXBUE5bmpuJx436B">当前得分：0</span></div>
+    <div class="card q-card" id="qCard" data-page-node-id="CYahMMNG8WPmF1DGvIFa6B"></div>
+  </div>
+</div></section>
+
+<footer data-page-node-id="b9aB8XpwBWc4T7WTQqxxqA"><div class="f-in" data-page-node-id="8TOsF9QHIEB8d1rGwwujMx">
+  <div data-page-node-id="RJY4aPf4GfECa2kN5NWnRd">由 <b data-page-node-id="gF1DeS7W612BWYE3woXKt3">WorkBuddy 智能体</b> 设计并生成 · 「智核 · AI 智能体探索站」</div>
+  <div data-page-node-id="mg6bL4GpULqVdoij9uHZe7">7 个可交互页面 · 纯前端单文件 · 双击即开</div>
+</div></footer>
+
+<button id="toTop" title="回到顶部" data-page-node-id="BIU53LEaVJhOE6vcDG2UsK">↑</button>
+<div id="tooltip" data-page-node-id="BKwG4QXSRj2NrdR2w7CGc0"></div>
+
+<div id="guide" data-page-node-id="ohxIFBrj9LvadJRmvSnstX">
+  <h4 data-page-node-id="kEcZsakBvBABbzCunHy5x1">🧭 交互引导</h4>
+  <p data-page-node-id="FdXJkr5zD9wu4ibCHx7jcm">这是一个<b data-page-node-id="Uw50BtE2yBTWgafFdkQ6tl">可交互</b>网站：顶部导航切换 7 个页面；「实验室」可配置并运行智能体；「测验」即时判分带解析；「面板」悬停看数据；右上角可换主题。</p>
+  <div class="row" data-page-node-id="e6DNzejrfSJvVMAbF8vBNb">
+    <button class="skip" id="guideSkip" data-page-node-id="ZQY5YyfN3LNXQBSpIFVTXE">知道了</button>
+    <button class="got" id="guideGo" data-page-node-id="9Hn5zaV2Nzi7bm9COeihCt">带我去实验室</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+
+/* ---------- 主题 ---------- */
+var root=document.documentElement,themeBtn=$('#themeBtn');
+function setTheme(t){root.setAttribute('data-theme',t);themeBtn.textContent=t==='dark'?'☀️':'🌙';
+  try{localStorage.setItem('zk-theme',t)}catch(e){}
+  if($('#page-dashboard').classList.contains('active'))drawCharts();}
+themeBtn.addEventListener('click',function(){setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark')});
+try{var sv=localStorage.getItem('zk-theme');if(sv){root.setAttribute('data-theme',sv);themeBtn.textContent=sv==='dark'?'☀️':'🌙';}}catch(e){}
+
+/* ---------- 路由 ---------- */
+var pages=['home','matrix','arch','lab','scenes','dashboard','quiz'];
+function go(p){
+  if(pages.indexOf(p)<0)p='home';
+  $$('.page').forEach(function(el){el.classList.remove('active')});
+  $('#page-'+p).classList.add('active');
+  $$('#navLinks button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-go')===p)});
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='dashboard')setTimeout(drawCharts,80);
+  if(p==='home'){startParticles();runCountUp();}
+}
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-go]');if(t)go(t.getAttribute('data-go'));
+});
+
+/* ---------- 引导浮层 / 回顶 ---------- */
+$('#guideSkip').addEventListener('click',function(){$('#guide').style.display='none'});
+$('#guideGo').addEventListener('click',function(){$('#guide').style.display='none';go('lab')});
+var toTop=$('#toTop');
+window.addEventListener('scroll',function(){toTop.classList.toggle('show',window.scrollY>400)});
+toTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+/* ---------- 打字动画 ---------- */
+var typeLines=['不只是聊天——我能感知、规划、调用工具、记住你。','给我一个目标，我会自己拆解并把它做完。',
+  '这，就是 2026 年最值得了解的 AI 形态。'];
+var tli=0,tci=0,tDel=false;
+(function typeLoop(){
+  var el=$('#typeTxt');if(!el)return;
+  var cur=typeLines[tli];
+  if(!tDel){tci++;if(tci>=cur.length){tDel=true;el.textContent=cur;setTimeout(typeLoop,1600);return;}}
+  else{tci--;if(tci<=0){tDel=false;tli=(tli+1)%typeLines.length;}}
+  el.textContent=cur.slice(0,tci);
+  setTimeout(typeLoop,tDel?26:60);
+})();
+
+/* ---------- 数字滚动 ---------- */
+var counted=false;
+function runCountUp(){
+  if(counted)return;counted=true;
+  $$('[data-count]').forEach(function(el){
+    var target=+el.getAttribute('data-count'),t0=null;
+    function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1100,1);
+      el.textContent=Math.round(target*(0.2+0.8*p));
+      if(p<1)requestAnimationFrame(step);else el.textContent=target;}
+    requestAnimationFrame(step);
+  });
+}
+
+/* ---------- 首页粒子 ---------- */
+var pc=$('#particles'),pctx=pc.getContext('2d'),pts=[],pRun=false;
+function sizePc(){var r=pc.parentElement.getBoundingClientRect();pc.width=r.width;pc.height=r.height;}
+function initPts(){pts=[];var n=Math.max(18,Math.floor(pc.width*pc.height/17000));
+  for(var i=0;i<n;i++)pts.push({x:Math.random()*pc.width,y:Math.random()*pc.height,
+    vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5});}
+function tick(){if(!pRun)return;pctx.clearRect(0,0,pc.width,pc.height);
+  var dark=root.getAttribute('data-theme')==='dark';
+  for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>pc.width)p.vx*=-1;if(p.y<0||p.y>pc.height)p.vy*=-1;
+    pctx.beginPath();pctx.arc(p.x,p.y,1.6,0,7);
+    pctx.fillStyle=dark?'rgba(140,150,255,.7)':'rgba(99,102,241,.55)';pctx.fill();
+    for(var j=i+1;j<pts.length;j++){var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy;
+      if(d<12000){pctx.beginPath();pctx.moveTo(p.x,p.y);pctx.lineTo(q.x,q.y);
+        pctx.strokeStyle=dark?'rgba(120,130,250,'+(0.28*(1-d/12000))+')':'rgba(99,102,241,'+(0.18*(1-d/12000))+')';
+        pctx.lineWidth=1;pctx.stroke();}}}
+  requestAnimationFrame(tick);}
+function startParticles(){if(pRun)return;pRun=true;sizePc();initPts();tick();}
+
+/* ---------- 能力图谱 ---------- */
+var caps=[
+ {ic:'👁️',name:'感知与理解',sub:'多模态输入解析',imp:92,
+  d:'接收文本、语音、图像、表格甚至屏幕截图等多模态输入，进行去噪、对齐与语义理解，准确捕捉用户"字面背后的真实意图"，是智能体与世界交互的入口。',
+  tags:['多模态融合','意图识别','实体抽取','上下文理解'],
+  eg:'典型应用：用户发一张销售报表截图 + 一句"看看哪个月异常"，智能体能把图像解析成结构化数据并理解"异常"指的是环比骤降。'},
+ {ic:'🧭',name:'规划与推理',sub:'任务分解与决策',imp:96,
+  d:'把一个开放式、复杂的目标自动拆解成一串可执行的子任务，排定优先级与依赖关系，并在执行中根据反馈动态调整路径——这是智能体"会做事"的核心大脑。',
+  tags:['任务分解','ReAct','思维链 CoT','思维树 ToT','规划器 Planner'],
+  eg:'典型应用：接到"策划一场发布会"的目标后，自动拆出定主题、邀嘉宾、订场地、做物料等子任务并排序推进。'},
+ {ic:'🧠',name:'记忆系统',sub:'短期 + 长期记忆',imp:86,
+  d:'短期记忆保存当前会话的上下文，长期记忆沉淀用户偏好、历史交互与领域知识，让智能体"记得住、越用越懂你"，而不是每次都从零开始。',
+  tags:['短期记忆','长期记忆','RAG 检索增强','向量数据库','情景记忆'],
+  eg:'典型应用：你上周说过"我对手冲咖啡感兴趣"，这周它推荐相关课程时能直接调取这条偏好。'},
+ {ic:'🔧',name:'工具调用',sub:'连接外部世界',imp:97,
+  d:'通过 Function Calling / MCP 等协议调用搜索引擎、代码解释器、数据库、API、浏览器等外部工具，把"想法"变成"行动"——这是智能体区别于纯聊天机器人的分水岭。',
+  tags:['Function Calling','MCP 协议','API 编排','代码执行','浏览器操作'],
+  eg:'典型应用：要"查最新股价并画图"，它会依次调用搜索获取数据、调用代码绘制图表，而非凭空编造。'},
+ {ic:'🔁',name:'反思与纠错',sub:'自我评估迭代',imp:82,
+  d:'对中间结果进行自我评估与校验，发现错误或偏离目标时主动回退、重试或换一条路径，让最终结果一次比一次更可靠，大幅降低"一本正经地胡说八道"。',
+  tags:['Self-Refine','Critic 评判模型','自我校验','回退重试'],
+  eg:'典型应用：生成的代码运行报错后，智能体读取报错信息、定位原因并自动修复再跑一遍。'},
+ {ic:'🤝',name:'多智能体协作',sub:'分工与编排',imp:89,
+  d:'多个各具专长的智能体像一个团队一样分工协作——有的检索、有的写作、有的审核——通过标准化消息传递与编排，完成单个智能体难以胜任的复杂工程。',
+  tags:['角色分工','A2A 协议','消息传递','编排 Orchestration','层级协作'],
+  eg:'典型应用：一个"调研小组"里，检索员、分析员、撰稿员、审校员四个智能体协同产出一篇行业研报。'}
+];
+var capIdx=0;
+function renderCaps(){
+  var list=$('#capList');list.innerHTML='';
+  caps.forEach(function(c,i){
+    var b=document.createElement('button');
+    b.className='cap-item'+(i===capIdx?' active':'');
+    b.innerHTML='<span class="n">'+c.ic+'</span><span><b>'+c.name+'</b><small>'+c.sub+'</small></span>';
+    b.addEventListener('click',function(){capIdx=i;renderCaps();});
+    list.appendChild(b);
+  });
+  var c=caps[capIdx],d=$('#capDetail');
+  d.innerHTML='<h3>'+c.ic+' '+c.name+'</h3><p class="desc">'+c.d+'</p>'+
+    '<div class="cap-sub">🔑 关键技术</div><div class="tags">'+c.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div>'+
+    '<div class="cap-sub">💼 典型应用</div><div class="eg">'+c.eg+'</div>'+
+    '<div class="meter-label"><span>在智能体中的重要度</span><b>'+c.imp+' / 100</b></div>'+
+    '<div class="meter"><div class="meter-fill" id="mf"></div></div>';
+  requestAnimationFrame(function(){setTimeout(function(){var mf=$('#mf');if(mf)mf.style.width=c.imp+'%';},40)});
+}
+renderCaps();
+
+/* ---------- 技术架构 ---------- */
+var arch=[
+ {ic:'🖥️',name:'交互层',sub:'用户与系统的入口',role:'接收请求 · 呈现结果',
+  comps:['聊天界面','API 网关','语音/表单','消息队列'],
+  d:'交互层是用户或外部系统与智能体之间的桥梁，负责接收多样化的输入（文字、语音、文件、API 调用），并把最终结果以合适的形式呈现回去。',
+  pts:['统一接入：兼容 Web、App、企业 IM、开放 API 等多种入口','会话管理：维护多轮对话状态与身份信息','流式输出：边生成边返回，降低等待感']},
+ {ic:'👁️',name:'感知层',sub:'理解与解析输入',role:'多模态解析 · 意图识别',
+  comps:['文本解析','语音识别','图像理解','结构化抽取'],
+  d:'感知层把原始输入"翻译"成智能体能理解的结构化表示：识别用户意图、抽取关键实体与约束、解析上传的文件或截图内容。',
+  pts:['多模态对齐：将图像/语音/文本映射到统一语义空间','意图识别：判断用户到底想完成什么','上下文补全：结合历史对话补全省略信息']},
+ {ic:'🧠',name:'认知层',sub:'大模型与规划核心',role:'推理 · 规划 · 反思',
+  comps:['LLM 核心','规划器 Planner','推理引擎','反思模块'],
+  d:'认知层是智能体的"大脑"，以大语言模型为核心，承担任务分解、路径规划、逐步推理与自我反思，决定"下一步该做什么"。',
+  pts:['任务分解：把大目标拆成可执行子任务','ReAct 循环：推理与行动交替推进','自我反思：评估中间结果并动态纠偏']},
+ {ic:'🗄️',name:'记忆层',sub:'上下文与知识库',role:'短期记忆 · 长期记忆',
+  comps:['会话缓存','向量数据库','知识图谱','用户画像'],
+  d:'记忆层为认知层提供"背景"：短期记忆保存当前会话上下文，长期记忆通过 RAG 检索外部知识库与历史偏好，让决策有据可依。',
+  pts:['短期记忆：维护最近对话与中间状态','长期记忆：沉淀用户偏好与领域知识','RAG 检索：按需取回最相关的资料片段']},
+ {ic:'🔧',name:'工具层',sub:'可调用的外部能力',role:'Function Calling · MCP',
+  comps:['搜索引擎','代码解释器','数据库','第三方 API','浏览器'],
+  d:'工具层封装了智能体可以调用的各种外部能力，并通过标准化协议（如 Function Calling、MCP）暴露给认知层，让"想"能够真正落地为"做"。',
+  pts:['工具注册：统一描述每个工具的用途与参数','协议标准：MCP 让工具即插即用','权限控制：限制敏感操作，保证安全']},
+ {ic:'⚡',name:'执行层',sub:'行动与环境反馈',role:'执行动作 · 观察结果',
+  comps:['动作执行器','环境接口','结果解析','安全沙箱'],
+  d:'执行层负责真正"动手"：运行代码、调用接口、操作文件或浏览器，并把执行结果（成功/失败/返回数据）反馈回认知层，形成完整闭环。',
+  pts:['动作执行：把决策翻译成具体操作','结果观察：解析返回值，判断成败','安全沙箱：隔离高风险操作，防止越权']}
+];
+var archIdx=2;
+function renderArch(){
+  var box=$('#archLayers');box.innerHTML='';
+  arch.forEach(function(a,i){
+    var b=document.createElement('button');
+    b.className='layer'+(i===archIdx?' active':'');
+    b.innerHTML='<div class="top"><span class="ic">'+a.ic+'</span><span style="flex:1"><b>'+a.name+'</b><small>'+a.sub+'</small></span>'+
+      '<span style="color:var(--dim)">›</span></div>'+
+      '<div class="comps">'+a.comps.map(function(c){return '<span class="cp">'+c+'</span>'}).join('')+'</div>';
+    b.addEventListener('click',function(){archIdx=i;renderArch();});
+    box.appendChild(b);
+  });
+  var a=arch[archIdx],d=$('#archDetail');
+  d.innerHTML='<h3>'+a.ic+' '+a.name+'</h3><div class="role">职责：'+a.role+'</div><p>'+a.d+'</p>'+
+    '<div class="cap-sub">📌 设计要点</div><ul>'+a.pts.map(function(p){return '<li>'+p+'</li>'}).join('')+'</ul>';
+}
+renderArch();
+
+/* ---------- 工作流实验室 ---------- */
+var cfg={model:'智核-1',temp:0.7,steps:5};
+$$('#modelSeg button').forEach(function(b){
+  b.addEventListener('click',function(){
+    $$('#modelSeg button').forEach(function(x){x.classList.remove('on')});
+    b.classList.add('on');cfg.model=b.getAttribute('data-v');
+  });
+});
+$('#tempRange').addEventListener('input',function(){cfg.temp=+this.value;$('#tempVal').textContent=this.value;});
+$('#stepRange').addEventListener('input',function(){cfg.steps=+this.value;$('#stepVal').textContent=this.value;});
+
+var stepDefs=[
+ {ic:'👁️',name:'感知',sub:'理解输入'},{ic:'🧭',name:'规划',sub:'拆解任务'},
+ {ic:'🧠',name:'记忆',sub:'调取上下文'},{ic:'🔧',name:'工具',sub:'调用外部能力'},
+ {ic:'🔁',name:'反思',sub:'校验纠偏'},{ic:'✅',name:'输出',sub:'交付结果'}
+];
+function buildPipeline(){
+  var pipe=$('#pipeline');pipe.innerHTML='';
+  stepDefs.forEach(function(s,i){
+    var n=document.createElement('div');n.className='node';n.id='node'+i;
+    n.innerHTML='<span class="ic">'+s.ic+'</span><b>'+s.name+'</b><small>'+s.sub+'</small>';
+    pipe.appendChild(n);
+  });
+}
+buildPipeline();
+var termBody=$('#termBody'),running=false;
+function typeLine(text,cls){return new Promise(function(res){
+  var d=document.createElement('div');d.className='line '+(cls||'');termBody.appendChild(d);
+  var i=0,c=document.createElement('span');
+  c.style.cssText='display:inline-block;width:8px;height:14px;background:#7ee787;vertical-align:-2px';
+  d.appendChild(c);
+  var t=setInterval(function(){d.textContent=text.slice(0,++i);d.appendChild(c);termBody.parentElement.scrollTop=1e6;
+    if(i>=text.length){clearInterval(t);c.remove();res();}},12);});}
+async function runAgent(){
+  if(running)return;running=true;
+  var task=$('#taskInput').value.trim()||'（未输入任务）';
+  $('#runBtn').disabled=true;$('#labStats').style.display='none';$('#resultCard').style.display='none';
+  termBody.innerHTML='';
+  stepDefs.forEach(function(_,i){var n=$('#node'+i);if(n)n.classList.remove('on','done');});
+  var toolCalls=0;
+  var calc=tryCalc(task),iid=calc?'calc':detectIntent(task);
+  var iname=calc?('数值计算'):(INTENT_NAMES[iid]||'通用任务');
+  var seq=[
+    {n:0,logs:[['[感知] 接收到任务指令','sys'],['[感知] 识别任务类型 → '+iname,'sys'],['[感知] 解析输入 → 「'+task+'」','dim']]},
+    {n:1,logs:[['[规划] 拆解为 '+cfg.steps+' 个子目标并排序优先级','sys'],['[规划] 生成执行计划 plan['+cfg.steps+']（温度 '+cfg.temp+'）','dim']]},
+    {n:2,logs:[['[记忆] 检索长期记忆：命中 2 条相关偏好','sys'],['[记忆] 载入会话上下文（最近 8 轮）','dim']]},
+    {n:3,logs:[['[工具] 调用 search() → 获取 12 条结果','sys'],(calc?['[工具] 调用 calc() → 精确计算表达式','sys']:['[工具] 调用 code.run() → 校验数据格式','sys']),['[工具] 调用 db.query() → 取回历史记录','dim']],tool:3},
+    {n:4,logs:[['[反思] 自我校验：逻辑自洽、数据完整','warn'],['[反思] 校验通过，无需回退','dim']]},
+    {n:5,logs:[['[输出] 汇总结果，正在生成交付物…','ok'],['[输出] 交付结果已生成 ✅','ok']]}
+  ];
+  var t0=Date.now();
+  for(var s=0;s<seq.length;s++){
+    var node=$('#node'+seq[s].n);if(node)node.classList.add('on');
+    for(var k=0;k<seq[s].logs.length;k++){var lg=seq[s].logs[k];await typeLine(lg[0],lg[1]);await wait(90);}
+    if(seq[s].tool)toolCalls+=seq[s].tool;
+    if(node){node.classList.remove('on');node.classList.add('done');}
+  }
+  var secs=((Date.now()-t0)/1000).toFixed(1);
+  var tokens=Math.round(1200+cfg.steps*380+cfg.temp*600+task.length*8);
+  await typeLine('—— 任务完成（模型 '+cfg.model+'），这就是"感知→规划→记忆→工具→反思→输出"的完整闭环。','ok');
+  $('#stTime').textContent=secs+'s';$('#stStep').textContent=cfg.steps;
+  $('#stTool').textContent=toolCalls;$('#stToken').textContent=tokens.toLocaleString();
+  $('#labStats').style.display='grid';
+  showResult(task);
+  $('#runBtn').disabled=false;running=false;
+}
+$('#runBtn').addEventListener('click',runAgent);
+$('#resetBtn').addEventListener('click',function(){
+  termBody.innerHTML='<div class="line dim">// 待命中… 配置好智能体后点击「运行智能体」</div>';
+  $('#labStats').style.display='none';$('#resultCard').style.display='none';
+  stepDefs.forEach(function(_,i){var n=$('#node'+i);if(n)n.classList.remove('on','done');});
+});
+$$('.preset').forEach(function(b){b.addEventListener('click',function(){$('#taskInput').value=b.textContent;});});
+
+/* ================= 交付结果引擎（支持任意问题） =================
+   纯前端环境下不依赖大模型：通过「意图识别 + 结构化模板 + 真实计算」
+   对任意输入即时生成一份有结构的交付结果；四则运算等可直接算出真实答案。 */
+var STOPWORDS=['帮我','请','麻烦','可以','能不能','我想','我要','给我','我','你','一下','一份','一个','一次','关于','怎么','如何','什么','哪些','这个','那个','做','写','生成','整理','规划','总结','分析','介绍','解释','推荐','列出','给出','输出','制作','设计','安排','计算','请问','对比','比较','哪个','哪款','哪家','区别','差异','的','了','和','与','及','是','要','想','把','这','那','个','吗','呢','啊','呗','哦','呀'];
+function subjectOf(t){
+  var s=t.replace(/[？?。！!，,、：:；;啊吧呢吗哦呀]+$/,'').trim();
+  s=s.replace(/^(帮我|请|麻烦|你可以|能不能帮我|能不能|我想|我要|给我|替我|帮忙|可以)+/,'');
+  s=s.replace(/^(做|写|生成|整理|规划|总结|分析|制作|输出|列出|给出|推荐|介绍|解释|设计|安排|翻译|计算|算|搞|来)+/,'');
+  s=s.replace(/^(这周|本周|上周|这个|那个|一次|一场|一件|关于|有关)+/,'');
+  s=s.replace(/^(把|将)+/,'');
+  return (s.trim()||t).slice(0,40);
+}
+function keywordsOf(t){
+  var parts=t.split(/[\s,，、。；;：:！!？?（）()【】\[\]\/\\|"'“”]+/).filter(Boolean);
+  var out=[];
+  parts.forEach(function(p){p=p.trim();if(p.length>=2&&STOPWORDS.indexOf(p)<0&&out.indexOf(p)<0)out.push(p);});
+  return out.slice(0,4);
+}
+function tryCalc(t){
+  var s=t.replace(/[×✕]/g,'*').replace(/÷/g,'/').replace(/（/g,'(').replace(/）/g,')').replace(/％/g,'%').replace(/[＋]/g,'+').replace(/[－]/g,'-');
+  var mp=s.match(/(-?\d+(?:\.\d+)?)\s*的\s*(?:百分之)?\s*(-?\d+(?:\.\d+)?)\s*%/);
+  if(mp){var a=+mp[1],b=+mp[2];return {q:a+' 的 '+b+'%',v:a*b/100,kind:'百分数计算'};}
+  var m=s.match(/-?\d+(?:\.\d+)?(?:\s*[+\-*/]\s*-?\d+(?:\.\d+)?)+/);
+  if(!m)return null;
+  var expr=m[0].replace(/\s+/g,'');
+  if(!/^[\d+\-*/().]+$/.test(expr))return null;
+  try{
+    var v=Function('"use strict";return('+expr+')')();
+    if(typeof v!=='number'||!isFinite(v))return null;
+    return {q:expr,v:v,kind:'四则运算'};
+  }catch(e){return null;}
+}
+var INTENTS=[
+ {id:'translate',keys:['翻译','translate','英文','英语','中文','日文','日语','韩语','法语','德语']},
+ {id:'code',keys:['代码','函数','程序','脚本','报错','bug','调试','python','javascript','js','java','sql','算法','正则','接口','api','爬虫']},
+ {id:'compare',keys:['对比','比较','哪个','哪款','哪家','区别','差异','优劣','排行','榜','性价比','vs','选哪','横评']},
+ {id:'plan',keys:['规划','行程','旅行','旅游','路线','攻略','出差','日程','时间表','安排','计划']},
+ {id:'summary',keys:['总结','摘要','概括','提炼','纪要','要点','待办','梳理','重点']},
+ {id:'report',keys:['报告','简报','调研','趋势','行业','市场','白皮书','研究','方案书','提案']},
+ {id:'recommend',keys:['推荐','值得买','买什么','送什么','求推荐','推荐一下','选购']},
+ {id:'query',keys:['天气','气温','汇率','股价','新闻','几点','日期','限行','路况','航班','票价','油价','电影','赛事','比分','政策']},
+ {id:'howto',keys:['怎么','如何','步骤','教程','入门','怎样','流程','指南','办法','方法','上手']},
+ {id:'explain',keys:['是什么','什么是','解释','为什么','原理','含义','概念','科普','什么意思']},
+ {id:'advice',keys:['建议','怎么办','是否','值得','靠谱','可行','应不应该','该不该','要不要','好不好']},
+ {id:'writing',keys:['文案','邮件','文章','作文','标题','宣传','稿','祝福','朋友圈','致辞','演讲稿','写一']},
+ {id:'brainstorm',keys:['创意','点子','想法','名字','起名','起个','思路','方向','灵感']}
+];
+var INTENT_NAMES={translate:'翻译',code:'代码/开发',compare:'对比选型',plan:'规划安排',summary:'要点提炼',report:'分析报告',recommend:'推荐选品',query:'信息查询',howto:'操作指引',explain:'概念解释',advice:'决策建议',writing:'文稿创作',brainstorm:'创意发散',general:'通用任务'};
+function detectIntent(t){
+  var low=t.toLowerCase(),best='general',bestScore=0;
+  INTENTS.forEach(function(it){
+    var sc=0;it.keys.forEach(function(k){if(low.indexOf(k)>=0)sc+=k.length;});
+    if(sc>bestScore){bestScore=sc;best=it.id;}
+  });
+  return best;
+}
+function buildResult(id,raw,subj,kws){
+  var kw=kws.length?kws.join('、'):subj;
+  switch(id){
+    case 'translate':{
+      var lang='英文';
+      if(/日文|日语/.test(raw))lang='日文';
+      else if(/韩/.test(raw))lang='韩文';
+      else if(/法/.test(raw))lang='法文';
+      else if(/中/.test(raw))lang='中文';
+      else if(/英|english/i.test(raw))lang='英文';
+      return {title:'翻译结果（→ '+lang+'）',summary:'已识别为翻译任务，将内容转换为'+lang+'，保留原意与语气，专业术语按惯例处理。',
+       points:['原文｜'+raw,'目标语言｜'+lang,'术语处理｜专有名词保留原文并加注','语气风格｜按语境自动匹配（正式 / 口语）'],
+       callout:'💡 提示：翻译需由语言模型完成。当前为前端演示，此卡展示翻译任务的结果结构；接入模型后即为真实译文。'};
+    }
+    case 'code':
+      return {title:'代码方案：'+subj,summary:'已把需求拆成可实现的步骤，并给出代码骨架与验证方式。',
+       points:['需求拆解｜'+raw,'实现思路｜先定义输入输出，再实现核心逻辑，最后补边界处理','代码骨架｜已生成主函数与调用示例，关键行附注释','常见坑｜空值 / 越界 / 异步时序，建议补单元测试','验证方式｜用 2~3 组样例跑通，并覆盖异常分支'],
+       callout:'💡 把报错信息一起贴进来，可更快定位问题并给出修复补丁。'};
+    case 'query':
+      return {title:'信息查询：'+subj,summary:'已识别为实时信息查询，需要联网检索最新数据后再作答。',
+       points:['查询对象｜'+raw,'所需数据｜实时 / 权威来源（官方或主流平台）','处理方式｜检索 → 交叉核对 → 归纳结论','时效性｜此类信息变化快，以最新结果为准'],
+       callout:'💡 提示：实时数据需联网检索。接入带搜索能力的模型后，此处将返回准确结果。'};
+    case 'compare':
+      return {title:'对比分析：'+(kws[0]||subj)+' 等方案',summary:'已从多个维度对「'+kw+'」做横向对比，并给出分场景结论。',
+       points:['对比维度｜价格、性能、易用性、生态、售后','各自优势｜逐项列出胜出的一方与理由','适用人群｜按预算与场景给出匹配建议','结论｜综合性价比给出首选与备选','依据｜基于公开参数与用户口碑归纳'],
+       callout:'💡 把具体型号 / 选项补全，可给出更精确的逐项打分表。'};
+    case 'plan':
+      return {title:'执行方案：'+subj,summary:'已把「'+subj+'」拆解为分阶段、可执行的计划，含动作与注意事项。',
+       points:['总目标｜'+raw,'阶段一｜准备与信息收集，明确约束条件','阶段二｜核心执行，按优先级逐项推进','阶段三｜收尾检查与结果复盘','注意事项｜预留弹性时间，关键节点提前确认'],
+       callout:'💡 告诉我时间 / 预算 / 人数，可生成更精确的日程表。'};
+    case 'summary':
+      return {title:'要点提炼：'+subj,summary:'已将内容浓缩为结构化要点，按重要性排序，可直接复用。',
+       points:['核心结论｜一句话概括主要内容','关键要点｜按优先级列出 3~5 条','行动项｜需要跟进的下一步（可补负责人 / 时间）','待确认｜尚不明确、需补充的信息'],
+       callout:'💡 把原文或会议记录粘贴进来，可提炼成精确的要点与待办。'};
+    case 'report':
+      return {title:'分析简报：'+subj,summary:'围绕「'+subj+'」输出背景、现状、趋势、建议四段式简报。',
+       points:['背景｜问题缘起与关注点','现状｜当前整体情况与关键事实','趋势｜驱动因素与走向判断','建议｜可落地的 3 条行动建议','风险提示｜需留意的变量与不确定性'],
+       callout:'💡 限定行业 / 时间 / 地区，简报会更聚焦。'};
+    case 'recommend':
+      return {title:'推荐清单：'+subj,summary:'综合口碑、性价比与使用场景，给出分层推荐。',
+       points:['首选｜综合表现最佳，适合多数人','性价比之选｜预算有限时的最优解','进阶之选｜追求极致体验可选','避坑提醒｜常见误区与不适合的情况','选购关注点｜下单前重点核对的 3 个参数'],
+       callout:'💡 告诉我预算和用途，推荐会更精准。'};
+    case 'howto':
+      return {title:'操作指南：'+subj,summary:'已把「'+subj+'」整理成从零上手的分步指南。',
+       points:['准备｜明确目标，备好所需工具与账号','第一步｜从最小可行版本开始，先跑通主干','第二步｜逐步补齐细节与异常处理','第三步｜验证结果并做最后检查','排错｜先看报错、再二分定位问题'],
+       callout:'💡 说明你的起点（完全新手 / 有基础），步骤可进一步细化。'};
+    case 'explain':
+      return {title:'快速解读：'+subj,summary:'关于「'+subj+'」，从定义、价值、用法三个角度做通俗解读。',
+       points:['一句话定义｜'+subj+' 的核心是什么','为什么重要｜它解决了什么痛点','关键组成｜由哪几部分构成','使用场景｜一个具体例子说明','常见误区｜容易混淆的地方'],
+       callout:'💡 想更深，可追问"它的原理"或"举个例子"。'};
+    case 'advice':
+      return {title:'决策建议：'+subj,summary:'围绕你的疑问，给出倾向性建议、理由与备选方案。',
+       points:['结论先行｜建议倾向哪一种选择','判断依据｜支持该结论的 3 条理由','反向考虑｜什么情况下应做相反选择','风险与成本｜需要付出的代价','下一步｜落地建议的第一个动作'],
+       callout:'💡 补充更多背景（预算 / 时间 / 偏好），建议会更贴合你。'};
+    case 'writing':
+      return {title:'文稿初稿：'+subj,summary:'已按需求生成一份可直接修改使用的文稿初稿，含结构与要点。',
+       points:['用途与语气｜按场景匹配正式 / 轻松风格','开篇｜抓住读者注意力的第一句','主体｜分 2~3 层展开核心信息','结尾｜给出明确的行动或情绪落点','待补项｜标出需你补充的具体信息'],
+       callout:'💡 给出受众、篇幅和风格，可重写得更贴合。'};
+    case 'brainstorm':
+      return {title:'创意点子：'+subj,summary:'围绕「'+subj+'」发散出多个方向，并按可行性标注推荐度。',
+       points:['方向一｜稳妥型：风险低、见效快','方向二｜差异化：有记忆点、易传播','方向三｜大胆型：想象空间大、需验证','推荐组合｜主推 + 备选的搭配思路','下一步｜挑 1 个方向做最小验证'],
+       callout:'💡 说明目标人群与调性，点子会更聚焦。'};
+    default:
+      return {title:'处理结果：'+subj,summary:'已理解你的需求「'+raw+'」，并整理出一份结构化结果。',
+       points:['任务理解｜'+raw,'核心结论｜已围绕该问题归纳出关键信息','要点一｜背景与现状梳理','要点二｜关键因素与权衡','要点三｜可执行的下一步'],
+       callout:'💡 想更精准：补充具体对象、时间、预算或目标，我会给出更有针对性的结果。'};
+  }
+}
+var lastResult=null;
+function genResult(task){
+  var raw=task.trim()||'（空任务）';
+  var subj=subjectOf(raw),kws=keywordsOf(raw);
+  var c=tryCalc(raw);
+  if(c){
+    return {title:'计算完成',summary:'已解析表达式并完成'+c.kind+'，结果如下。',
+      points:['原始问题｜'+raw,'识别表达式｜'+c.q,'计算类型｜'+c.kind,'计算结果｜'+c.q+' = '+c.v],
+      callout:'💡 结果：'+c.q+' = '+c.v+'（由本地计算引擎直接算出，准确无误）'};
+  }
+  var id=detectIntent(raw);
+  var r=buildResult(id,raw,subj,kws);
+  r.intent=id;
+  return r;
+}
+function resultMarkdown(){
+  if(!lastResult)return '';
+  var r=lastResult.r;
+  return '# '+r.title+'\n\n> 任务：'+lastResult.task+'\n\n'+r.summary+'\n\n## 关键要点\n\n'+
+    r.points.map(function(p){return '- '+p}).join('\n')+'\n\n'+r.callout+'\n\n---\n由「智核 · AI 智能体探索站」工作流实验室生成\n';
+}
+function showResult(task){
+  var r=genResult(task);lastResult={task:task,r:r};
+  var card=$('#resultCard');
+  $('#rTask').textContent='「'+task+'」';
+  var delay=0;function d(){delay+=0.06;return 'animation-delay:'+delay.toFixed(2)+'s'}
+  var html='<h4 class="rv-item" style="'+d()+'">📑 '+r.title+'</h4>'+
+    '<p class="rv-item" style="'+d()+'">'+r.summary+'</p>'+
+    '<h4 class="rv-item" style="'+d()+'">🔑 关键要点</h4><ul>'+
+    r.points.map(function(p){return '<li class="rv-item" style="'+d()+'">'+p+'</li>'}).join('')+'</ul>'+
+    '<div class="callout rv-item" style="'+d()+'">'+r.callout+'</div>'+
+    '<div class="rv-item" style="'+d()+';font-size:11.5px;color:var(--dim);opacity:.75;margin-top:12px">演示环境 · 结果由本地规则引擎即时生成；接入大模型（LLM）后将返回实时、真实的内容。</div>';
+  $('#resultBody').innerHTML=html;
+  card.style.display='block';
+  card.classList.remove('rv-item');
+  setTimeout(function(){try{card.scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}},120);
+}
+$('#copyBtn').addEventListener('click',function(){
+  var md=resultMarkdown(),btn=this;
+  function done(){btn.textContent='✅ 已复制';btn.classList.add('copied');
+    setTimeout(function(){btn.textContent='📋 复制结果';btn.classList.remove('copied')},1600);}
+  function fallback(){var ta=document.createElement('textarea');ta.value=md;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();done();}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(md).then(done,fallback);}else fallback();
+});
+$('#dlBtn').addEventListener('click',function(){
+  var md=resultMarkdown();
+  var blob=new Blob(['\ufeff'+md],{type:'text/markdown;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='智能体结果_'+new Date().toISOString().slice(0,10)+'.md';
+  document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},120);
+});
+
+/* ---------- 应用场景 ---------- */
+var scenes=[
+ {tab:'💼 办公自动化',ic:'💼',name:'办公自动化',sub:'重复性工作的"数字员工"',
+  d:'智能体可以自动处理会议纪要、邮件分类、报表汇总、跨系统数据搬运等高频重复工作，把人从繁琐事务中解放出来，专注于决策与创造。',
+  steps:['读取本周所有会议纪要原文','提取关键决议与行动项','按负责人归类生成待办清单','同步到项目管理工具并 @ 相关人员'],
+  prods:['Microsoft 365 Copilot','钉钉 AI 助理','飞书智能伙伴','金山 WPS AI'],
+  kpi:[['70%','事务性工作可自动化'],['5×','整理效率提升']]},
+ {tab:'💻 编程助手',ic:'💻',name:'AI 编程助手',sub:'从补全到"交付一个功能"',
+  d:'编程智能体不再只是补全单行代码，而是能理解需求、跨文件修改、运行测试、修复报错，像一个结对工程师一样独立完成一个完整功能模块。',
+  steps:['理解需求并阅读相关代码库','制定修改方案，定位涉及文件','编写/重构代码并运行单元测试','根据报错自我调试直至通过'],
+  prods:['GitHub Copilot','Cursor','Claude Code','CodeBuddy'],
+  kpi:[['55%','编码时间平均节省'],['30+','可跨文件协同修改']]},
+ {tab:'🎧 智能客服',ic:'🎧',name:'智能客服',sub:'7×24 的"金牌坐席"',
+  d:'客服智能体能理解多轮、带情绪的咨询，结合知识库准确作答，并在需要时自动调用订单、物流等系统查询真实数据，复杂问题再无缝转人工。',
+  steps:['识别用户问题与情绪倾向','检索知识库匹配标准答案','调用订单/物流接口查实时状态','解决不了则总结上下文转人工'],
+  prods:['阿里小蜜','京东言犀','腾讯企点','Intercom Fin'],
+  kpi:[['80%','常见问题自助解决'],['24h','全天候在线']]},
+ {tab:'📊 数据分析',ic:'📊',name:'数据分析',sub:'用自然语言"对话数据"',
+  d:'分析智能体让用户用一句话就能取数、算账、画图：它自动生成查询、调用代码处理数据、产出可视化图表，并给出有洞察的结论，而非冷冰冰的数字。',
+  steps:['理解"分析一下上季度各区域销量"','自动生成 SQL 取数并清洗','调用代码计算同比/环比并绘图','输出结论与异常点解读'],
+  prods:['ChatGPT 数据分析','Tableau AI','阿里析言','Julius AI'],
+  kpi:[['分钟级','从取数到出图'],['0 门槛','无需会 SQL']]},
+ {tab:'🧭 个人助理',ic:'🧭',name:'个人助理',sub:'懂你日程的"贴身管家"',
+  d:'个人助理智能体能管理日程、规划出行、订酒店机票、提醒待办，并记住你的偏好（靠窗座位、预算范围），主动把生活安排得井井有条。',
+  steps:['接收"帮我安排下周去深圳的出差"','查询日历冲突与可用时间','比价并预订机票酒店','生成行程单并同步提醒'],
+  prods:['Apple Intelligence','荣耀 YOYO','OPPO 小布','Google Gemini'],
+  kpi:[['1 句话','完成一趟差旅安排'],['全天候','主动提醒']]},
+ {tab:'🎓 教育辅导',ic:'🎓',name:'教育辅导',sub:'因材施教的"私人家教"',
+  d:'教育智能体能根据学生的作答诊断薄弱点，动态调整讲解难度与节奏，用苏格拉底式提问引导思考，而不是直接给答案，实现真正的个性化学习。',
+  steps:['诊断学生当前掌握水平','定位知识薄弱点','生成针对性讲解与例题','根据反馈动态调整难度'],
+  prods:['Khanmigo','作业帮 AI','松鼠 Ai','Duolingo Max'],
+  kpi:[['1 对 1','个性化教学节奏'],['自适应','难度动态调整']]}
+];
+var scIdx=0;
+function renderScenes(){
+  var tabs=$('#scTabs');tabs.innerHTML='';
+  scenes.forEach(function(s,i){
+    var b=document.createElement('button');b.className='sc-tab'+(i===scIdx?' on':'');b.textContent=s.tab;
+    b.addEventListener('click',function(){scIdx=i;renderScenes();});tabs.appendChild(b);
+  });
+  var s=scenes[scIdx],p=$('#scPanel');
+  p.innerHTML='<div class="head"><span class="ic">'+s.ic+'</span><div><h3>'+s.name+'</h3><div class="sub">'+s.sub+'</div></div></div>'+
+    '<div class="sc-cols"><div><p>'+s.d+'</p>'+
+    '<div class="cap-sub">⚙️ 它是怎么做的</div><div class="sc-steps">'+
+      s.steps.map(function(st,i){return '<div class="sc-step"><span class="k">'+(i+1)+'</span><span>'+st+'</span></div>'}).join('')+'</div></div>'+
+    '<div class="sc-meta"><h5>🌟 代表产品</h5><div class="prods">'+s.prods.map(function(x){return '<span class="prod">'+x+'</span>'}).join('')+'</div>'+
+    '<h5 style="margin-top:18px">📊 关键成效</h5><div class="kpi">'+
+      s.kpi.map(function(k){return '<div><b>'+k[0]+'</b><span>'+k[1]+'</span></div>'}).join('')+'</div></div></div>';
+}
+renderScenes();
+
+/* ---------- 数据面板 ---------- */
+var tooltip=$('#tooltip');
+var barData=[['互联网',68],['金融',54],['零售',47],['制造',41],['医疗',36],['教育',33]];
+var lineData=[['2021',3.2],['2022',5.1],['2023',8.6],['2024',13.9],['2025',21.5],['2026',32.8]];
+var donutData=[['LangChain',34,'#4f46e5'],['AutoGen',22,'#06b6d4'],['CrewAI',18,'#8b5cf6'],['LlamaIndex',14,'#14b8a6'],['其他',12,'#94a3b8']];
+var radarData=[['感知',92],['规划',96],['记忆',86],['工具',97],['反思',82],['协作',89]];
+function css(v){return getComputedStyle(root).getPropertyValue(v).trim()}
+function hiDpi(cv){var r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;
+  cv.width=r.width*d;cv.height=r.height*d;var ctx=cv.getContext('2d');ctx.setTransform(d,0,0,d,0,0);
+  return {ctx:ctx,w:r.width,h:r.height};}
+var barRects=[],linePts=[],donutSecs=[];
+function drawBar(){var cv=$('#barChart'),o=hiDpi(cv),ctx=o.ctx,W=o.w,H=o.h;
+  var pad={l:36,r:14,t:16,b:34},cw=W-pad.l-pad.r,ch=H-pad.t-pad.b,max=80;
+  ctx.clearRect(0,0,W,H);barRects=[];
+  ctx.strokeStyle=css('--border');ctx.fillStyle=css('--dim');ctx.font='11px sans-serif';
+  for(var g=0;g<=4;g++){var y=pad.t+ch-(ch*g/4);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    ctx.fillText((max*g/4)+'',8,y+4);}
+  var bw=cw/barData.length;
+  barData.forEach(function(d,i){var x=pad.l+i*bw+bw*0.2,w=bw*0.6,h=ch*d[1]/max,y=pad.t+ch-h;
+    var grad=ctx.createLinearGradient(0,y,0,pad.t+ch);grad.addColorStop(0,css('--accent'));grad.addColorStop(1,css('--accent-2'));
+    ctx.fillStyle=grad;ctx.beginPath();
+    if(ctx.roundRect)ctx.roundRect(x,y,w,h,[7,7,0,0]);else ctx.rect(x,y,w,h);ctx.fill();
+    ctx.fillStyle=css('--text');ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.fillText(d[1]+'%',x+w/2,y-6);
+    ctx.fillStyle=css('--dim');ctx.font='11.5px sans-serif';ctx.fillText(d[0],x+w/2,H-12);ctx.textAlign='left';
+    barRects.push({x:x,y:y,w:w,h:h,label:d[0],val:d[1]+'%'});});}
+function drawLine(){var cv=$('#lineChart'),o=hiDpi(cv),ctx=o.ctx,W=o.w,H=o.h;
+  var pad={l:36,r:20,t:18,b:34},cw=W-pad.l-pad.r,ch=H-pad.t-pad.b,max=36;
+  ctx.clearRect(0,0,W,H);linePts=[];
+  ctx.strokeStyle=css('--border');ctx.fillStyle=css('--dim');ctx.font='11px sans-serif';
+  for(var g=0;g<=4;g++){var y=pad.t+ch-(ch*g/4);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    ctx.fillText((max*g/4)+'',8,y+4);}
+  lineData.forEach(function(d,i){linePts.push({x:pad.l+cw*i/(lineData.length-1),y:pad.t+ch-ch*d[1]/max,label:d[0],val:'$'+d[1]+'B'});});
+  var grad=ctx.createLinearGradient(0,pad.t,0,pad.t+ch);grad.addColorStop(0,'rgba(79,70,229,.28)');grad.addColorStop(1,'rgba(79,70,229,0)');
+  ctx.beginPath();ctx.moveTo(linePts[0].x,pad.t+ch);linePts.forEach(function(p){ctx.lineTo(p.x,p.y)});
+  ctx.lineTo(linePts[linePts.length-1].x,pad.t+ch);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();linePts.forEach(function(p,i){i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)});
+  ctx.strokeStyle=css('--accent');ctx.lineWidth=2.5;ctx.stroke();
+  linePts.forEach(function(p,i){ctx.beginPath();ctx.arc(p.x,p.y,4.5,0,7);ctx.fillStyle=css('--surface');ctx.fill();
+    ctx.lineWidth=2.5;ctx.strokeStyle=css('--accent-2');ctx.stroke();
+    ctx.fillStyle=css('--dim');ctx.font='11.5px sans-serif';ctx.textAlign='center';ctx.fillText(lineData[i][0],p.x,H-12);ctx.textAlign='left';});}
+function drawDonut(){var cv=$('#donutChart'),o=hiDpi(cv),ctx=o.ctx,W=o.w,H=o.h;
+  ctx.clearRect(0,0,W,H);donutSecs=[];
+  var cx=W/2,cy=H/2,R=Math.min(W,H)/2-14,r=R*0.58,total=0,i;
+  donutData.forEach(function(d){total+=d[1]});
+  var a0=-Math.PI/2;
+  for(i=0;i<donutData.length;i++){var d=donutData[i];
+    var ang=d[1]/total*Math.PI*2,a1=a0+ang;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a0,a1);ctx.closePath();
+    ctx.fillStyle=d[2];ctx.fill();
+    donutSecs.push({a0:a0,a1:a1,cx:cx,cy:cy,R:R,label:d[0],val:d[1]+'%'});
+    a0=a1;}
+  ctx.globalCompositeOperation='destination-out';
+  ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.fill();
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle=css('--text');ctx.font='bold 18px sans-serif';ctx.textAlign='center';
+  ctx.fillText('框架',cx,cy-4);ctx.font='11.5px sans-serif';ctx.fillStyle=css('--dim');ctx.fillText('关注度',cx,cy+14);ctx.textAlign='left';
+  var lg=$('#donutLegend');lg.innerHTML=donutData.map(function(d){
+    return '<span><i style="background:'+d[2]+'"></i>'+d[0]+' '+d[1]+'%</span>'}).join('');}
+function drawRadar(){var cv=$('#radarChart'),o=hiDpi(cv),ctx=o.ctx,W=o.w,H=o.h;
+  ctx.clearRect(0,0,W,H);
+  var cx=W/2,cy=H/2+4,R=Math.min(W,H)/2-34,n=radarData.length,max=100,i,ring;
+  function pt(idx,val){var ang=-Math.PI/2+idx*2*Math.PI/n,r=R*val/max;return [cx+Math.cos(ang)*r,cy+Math.sin(ang)*r];}
+  for(ring=1;ring<=4;ring++){ctx.beginPath();
+    for(i=0;i<=n;i++){var p=pt(i%n,max*ring/4);if(i)ctx.lineTo(p[0],p[1]);else ctx.moveTo(p[0],p[1]);}
+    ctx.strokeStyle=css('--border');ctx.lineWidth=1;ctx.stroke();}
+  ctx.font='12px sans-serif';
+  for(i=0;i<n;i++){var pe=pt(i,max);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(pe[0],pe[1]);
+    ctx.strokeStyle=css('--border');ctx.stroke();
+    var pl=pt(i,max*1.18);ctx.fillStyle=css('--dim');ctx.textAlign='center';ctx.fillText(radarData[i][0],pl[0],pl[1]+4);}
+  ctx.beginPath();for(i=0;i<=n;i++){var p2=pt(i%n,radarData[i%n][1]);if(i)ctx.lineTo(p2[0],p2[1]);else ctx.moveTo(p2[0],p2[1]);}
+  ctx.closePath();ctx.fillStyle='rgba(79,70,229,.22)';ctx.fill();
+  ctx.strokeStyle=css('--accent');ctx.lineWidth=2;ctx.stroke();
+  for(i=0;i<n;i++){var p3=pt(i,radarData[i][1]);ctx.beginPath();ctx.arc(p3[0],p3[1],4,0,7);
+    ctx.fillStyle=css('--surface');ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=css('--accent-2');ctx.stroke();}
+  ctx.textAlign='left';}
+function drawCharts(){drawBar();drawLine();drawDonut();drawRadar();}
+function bindHover(cvId,fn){var cv=$(cvId);if(!cv)return;
+  cv.addEventListener('mousemove',function(e){var r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+    var found=fn(mx,my);
+    if(found){tooltip.textContent=found;tooltip.style.opacity=1;tooltip.style.left=(e.clientX+12)+'px';tooltip.style.top=(e.clientY-10)+'px';}
+    else tooltip.style.opacity=0;});
+  cv.addEventListener('mouseleave',function(){tooltip.style.opacity=0;});}
+bindHover('#barChart',function(mx,my){for(var i=0;i<barRects.length;i++){var s=barRects[i];
+  if(mx>=s.x&&mx<=s.x+s.w&&my>=s.y)return s.label+'：采用率 '+s.val;}return null;});
+bindHover('#lineChart',function(mx,my){for(var i=0;i<linePts.length;i++){var s=linePts[i],dx=mx-s.x,dy=my-s.y;
+  if(dx*dx+dy*dy<200)return s.label+' 年：'+s.val;}return null;});
+bindHover('#donutChart',function(mx,my){for(var i=0;i<donutSecs.length;i++){var s=donutSecs[i];
+  var dx=mx-s.cx,dy=my-s.cy,dist=Math.sqrt(dx*dx+dy*dy);if(dist>s.R)continue;
+  var ang=Math.atan2(dy,dx);if(ang<-Math.PI/2)ang+=Math.PI*2;
+  if(ang>=s.a0&&ang<=s.a1)return s.label+'：'+s.val;}return null;});
+window.addEventListener('resize',function(){
+  if($('#page-dashboard').classList.contains('active'))drawCharts();
+  if($('#page-home').classList.contains('active')){sizePc();initPts();}
+});
+
+/* ---------- 知识测验 ---------- */
+var quiz=[
+ {cat:'概念',diff:'easy',q:'智能体（Agent）与普通聊天机器人最核心的区别是？',
+  o:['回答内容更长','能自主规划并调用工具把任务做完','界面更好看','支持更多语言'],a:1,
+  ex:'智能体的本质区别在于"自主性"：给定目标后能自主拆解、调用工具、闭环执行，而非一问一答。'},
+ {cat:'组成',diff:'easy',q:'下列哪一项不属于智能体的典型组成？',
+  o:['感知','规划','工具调用','屏幕分辨率'],a:3,
+  ex:'智能体的经典组成是感知、规划、记忆、工具调用等，与显示硬件参数无关。'},
+ {cat:'技术',diff:'mid',q:'RAG（检索增强生成）主要用来解决什么问题？',
+  o:['提升模型参数量','让模型接入外部知识、减少幻觉','加快推理速度','降低硬件功耗'],a:1,
+  ex:'RAG 通过检索外部知识库为模型提供"依据"，显著减少凭空编造（幻觉），是记忆层的关键技术。'},
+ {cat:'框架',diff:'mid',q:'ReAct 框架的核心思想是？',
+  o:['只做推理','只做行动','推理（Reason）与行动（Act）交替进行','随机选择动作'],a:2,
+  ex:'ReAct 让模型"边想边做"：先推理下一步该做什么，再执行动作并观察结果，循环直至完成。'},
+ {cat:'架构',diff:'mid',q:'多个智能体分工协作完成复杂任务，这类系统通常称为？',
+  o:['Single-Agent','Multi-Agent（多智能体系统）','Zero-Agent','Mono-Agent'],a:1,
+  ex:'多智能体系统（Multi-Agent System）通过角色分工与消息传递协作，能完成单智能体难以胜任的复杂任务。'},
+ {cat:'技术',diff:'mid',q:'Function Calling（函数调用）对智能体的意义是？',
+  o:['让模型能画图','让模型以结构化方式调用外部工具/API','提升显存利用率','让对话更流畅'],a:1,
+  ex:'Function Calling 让模型输出标准化的调用指令，从而安全、可控地使用搜索、数据库等外部工具。'},
+ {cat:'概念',diff:'easy',q:'智能体"记忆系统"中的长期记忆通常借助什么实现？',
+  o:['增大模型参数','向量数据库 + 检索','更快的 CPU','更长的提示词'],a:1,
+  ex:'长期记忆一般把历史与知识存入向量数据库，用时通过语义检索（RAG）取回，而非依赖模型自身参数。'},
+ {cat:'框架',diff:'hard',q:'关于 MCP（Model Context Protocol），下列说法正确的是？',
+  o:['是一种新的编程语言','是标准化"模型连接外部工具/数据"的开放协议','是一种数据库','是模型压缩技术'],a:1,
+  ex:'MCP 由 Anthropic 提出，旨在让工具与数据源"即插即用"地接入各类模型，是工具层的标准化协议。'},
+ {cat:'架构',diff:'hard',q:'在典型的智能体闭环中，正确的顺序是？',
+  o:['输出→规划→感知','感知→规划→行动→观察→（循环）','规划→记忆→结束','行动→感知→输出'],a:1,
+  ex:'智能体遵循"感知→规划→行动→观察结果→再规划"的闭环，直到目标达成才输出最终结果。'},
+ {cat:'技术',diff:'hard',q:'智能体的"反思（Reflection）"机制主要用于？',
+  o:['让回答更有文采','自我评估结果、发现错误并迭代改进','减少模型体积','加快首字输出'],a:1,
+  ex:'反思机制让智能体对中间结果自我评判，发现偏差时回退重试，从而显著提升最终结果的可靠性。'}
+];
+var qi=0,qScore=0,qWrong=[];
+function diffLabel(d){return d==='easy'?'<span class="q-diff d-easy">基础</span>':d==='mid'?'<span class="q-diff d-mid">进阶</span>':'<span class="q-diff d-hard">挑战</span>';}
+function renderQ(){
+  if(qi>=quiz.length){renderScore();return;}
+  var item=quiz[qi];
+  $('#qStep').textContent='第 '+(qi+1)+' / '+quiz.length+' 题';
+  $('#qScore').textContent='当前得分：'+qScore;
+  $('#qBar').style.width=(qi/quiz.length*100)+'%';
+  var c=$('#qCard');
+  c.innerHTML='<div class="q-top">'+diffLabel(item.diff)+'<span class="q-cat">'+item.cat+'</span></div>'+
+    '<div class="q-text">'+(qi+1)+'. '+item.q+'</div>'+
+    item.o.map(function(o,i){return '<button class="opt" data-i="'+i+'">'+String.fromCharCode(65+i)+'. '+o+'</button>'}).join('')+
+    '<div class="q-feedback" id="qfb"></div><div class="explain" id="qex">💡 '+item.ex+'</div><div class="q-foot"></div>';
+  $$('#qCard .opt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var pick=+btn.getAttribute('data-i'),fb=$('#qfb');
+      $$('#qCard .opt').forEach(function(b){b.disabled=true;var bi=+b.getAttribute('data-i');
+        if(bi===item.a){b.classList.add('correct');b.innerHTML+='<span class="mark">✓</span>';}});
+      if(pick===item.a){qScore+=10;fb.textContent='回答正确，+10 分！';fb.className='q-feedback ok';}
+      else{btn.classList.add('wrong');btn.innerHTML+='<span class="mark">✗</span>';
+        fb.textContent='答错了，正确答案是 '+String.fromCharCode(65+item.a)+'。';fb.className='q-feedback no';
+        qWrong.push({i:qi,pick:pick});}
+      $('#qScore').textContent='当前得分：'+qScore;
+      $('#qex').classList.add('show');
+      var foot=$('#qCard .q-foot'),nb=document.createElement('button');nb.className='btn btn-primary';
+      nb.textContent=(qi===quiz.length-1)?'查看成绩 →':'下一题 →';
+      nb.addEventListener('click',function(){qi++;renderQ();});foot.appendChild(nb);
+    });
+  });
+}
+function renderScore(){
+  $('#qBar').style.width='100%';$('#qStep').textContent='测验完成';
+  var grade=qScore>=90?'A · 优秀':qScore>=75?'B · 良好':qScore>=60?'C · 及格':'D · 加油';
+  var msg=qScore>=90?'出色！你已经系统掌握了智能体的核心知识 🎉':
+          qScore>=75?'很棒！基础扎实，再巩固下进阶内容 👍':
+          qScore>=60?'不错，回到「能力图谱」和「技术架构」再看看会更好 💪':
+          '别灰心，先去「工作流实验室」跑一遍、再逛逛「应用场景」就懂了 🚀';
+  var rv='';
+  if(qWrong.length){
+    rv='<div class="review"><h4>📋 错题回顾（'+qWrong.length+' 道）</h4>'+
+      qWrong.map(function(w){var it=quiz[w.i];
+        return '<div class="rv"><div class="qq">'+(w.i+1)+'. '+it.q+'</div>'+
+        '<div class="ww">你的选择：'+String.fromCharCode(65+w.pick)+'. '+it.o[w.pick]+'</div>'+
+        '<div class="aa">正确答案：'+String.fromCharCode(65+it.a)+'. '+it.o[it.a]+'</div>'+
+        '<div class="ex">💡 '+it.ex+'</div></div>'}).join('')+'</div>';
+  }else{
+    rv='<div class="review"><h4>🎉 全部答对，没有错题！</h4></div>';
+  }
+  $('#qCard').innerHTML='<div class="score-box"><div class="score-num">'+qScore+'</div>'+
+    '<div class="score-grade">评级 '+grade+'</div><div class="score-msg">'+msg+'</div>'+
+    '<button class="btn btn-primary" id="again">↺ 再测一次</button></div>'+rv;
+  $('#again').addEventListener('click',function(){qi=0;qScore=0;qWrong=[];renderQ();});
+}
+renderQ();
+
+/* ---------- 初始 ---------- */
+window.addEventListener('resize',function(){if(pRun){sizePc();initPts();}});
+go('home');
+startParticles();runCountUp();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>交互引导 · 智核 AI 智能体探索站</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;color:#0f172a;
+    padding:46px 40px 60px;background:linear-gradient(180deg,#eef2ff 0%,#f8fafc 100%)}
+  .wrap{max-width:1080px;margin:0 auto}
+  .head{text-align:center;margin-bottom:34px}
+  .head .tag{display:inline-block;background:#4f46e5;color:#fff;font-size:13px;font-weight:700;
+    letter-spacing:.1em;padding:6px 16px;border-radius:999px;margin-bottom:14px}
+  .head h1{font-size:38px;font-weight:850;letter-spacing:-.01em}
+  .head h1 span{background:linear-gradient(135deg,#4f46e5,#06b6d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .head p{color:#64748b;font-size:16px;margin-top:10px}
+  .step{display:flex;gap:22px;align-items:flex-start;background:#fff;border:1px solid #e2e8f0;
+    border-radius:22px;padding:22px;margin-bottom:22px;box-shadow:0 10px 30px rgba(15,23,42,.07)}
+  .num{flex-shrink:0;width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#4f46e5,#06b6d4);
+    color:#fff;display:grid;place-items:center;font-size:24px;font-weight:800;box-shadow:0 8px 18px rgba(79,70,229,.35)}
+  .body{flex:1}
+  .body h3{font-size:19px;margin-bottom:4px}
+  .body .how{color:#4f46e5;font-weight:700;font-size:14px;margin-bottom:6px}
+  .body p{color:#64748b;font-size:14px;margin-bottom:12px}
+  .body img{width:100%;border-radius:12px;border:1px solid #e2e8f0;display:block}
+  .foot{text-align:center;color:#94a3b8;font-size:13px;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="tag">W2 · 自制网页设计 · 交互引导图</div>
+    <h1>「智核 · AI 智能体探索站」<span>怎么玩</span></h1>
+    <p>一个纯前端、7 页面的可交互网站。按下面 7 步，即可体验全部交互功能。</p>
+  </div>
+
+  <div class="step"><div class="num">1</div><div class="body">
+    <h3>首页 · 总览与导航</h3>
+    <div class="how">🖱️ 交互：点顶部导航切换 7 个页面 / 点卡片直达 / 右上角 🌙 切换明暗主题 / 右下角回顶</div>
+    <p>首屏是动态粒子背景 + 打字机动副标题 + 数字滚动统计，下方"什么是智能体""核心特征""发展简史"一应俱全。</p>
+    <img src="shots/1-home.png" alt="首页"></div></div>
+
+  <div class="step"><div class="num">2</div><div class="body">
+    <h3>能力图谱 · 点开看详解</h3>
+    <div class="how">🖱️ 交互：点击左侧任一能力，右侧实时切换详解 + 关键技术 + 典型应用 + 重要度动画</div>
+    <p>智能体六大核心能力（感知/规划/记忆/工具/反思/协作），每个都附关键技术与真实应用示例。</p>
+    <img src="shots/2-matrix.png" alt="能力图谱"></div></div>
+
+  <div class="step"><div class="num">3</div><div class="body">
+    <h3>技术架构 · 逐层拆解</h3>
+    <div class="how">🖱️ 交互：点击左侧任意一层（交互/感知/认知/记忆/工具/执行），右侧显示职责与设计要点</div>
+    <p>把一个智能体的内部结构拆成六层，看清"需求进来、结果出去"的完整链路。</p>
+    <img src="shots/3-arch.png" alt="技术架构"></div></div>
+
+  <div class="step"><div class="num">4</div><div class="body">
+    <h3>工作流实验室 · 配一个智能体并拿到结果</h3>
+    <div class="how">🖱️ 交互：左侧选模型/调温度/设步数 → 输入任意任务 → 点「运行」→ 流水线点亮 + 终端日志 + 下方自动生成交付结果卡（可复制 / 下载 Markdown）</div>
+    <p>最核心的一页：亲手配置参数，亲眼看到智能体"感知→规划→记忆→工具→反思→输出"闭环，并且无论输入什么问题都会得到结构化交付结果，计算题直接算出答案。</p>
+    <img src="shots/4-lab.png" alt="工作流实验室"></div></div>
+
+  <div class="step"><div class="num">5</div><div class="body">
+    <h3>应用场景 · 看它在哪上岗</h3>
+    <div class="how">🖱️ 交互：点击顶部标签切换 6 大领域（办公/编程/客服/分析/助理/教育）</div>
+    <p>每个场景都给出"它是怎么做的"分步流程、代表产品与关键成效数据。</p>
+    <img src="shots/5-scenes.png" alt="应用场景"></div></div>
+
+  <div class="step"><div class="num">6</div><div class="body">
+    <h3>数据面板 · 悬停看数值</h3>
+    <div class="how">🖱️ 交互：把鼠标悬停到柱子 / 折线节点 / 环形扇区上，浮出提示框显示具体数值</div>
+    <p>四张纯 Canvas 手绘图表：行业采用率、市场规模、框架关注度环形图、能力重要度雷达图，附 4 张洞察卡片。</p>
+    <img src="shots/6-dashboard.png" alt="数据面板"></div></div>
+
+  <div class="step"><div class="num">7</div><div class="body">
+    <h3>知识测验 · 即时判分带解析</h3>
+    <div class="how">🖱️ 交互：点击选项立即判对错（绿✓/红✗）并弹出解析，答完出总分+评级+错题回顾，可一键重测</div>
+    <p>10 道题覆盖概念、技术与框架，分基础/进阶/挑战三档，做完成绩单可逐题回顾。</p>
+    <img src="shots/7-quiz.png" alt="知识测验"></div></div>
+
+  <div class="foot">由 WorkBuddy 智能体设计并生成 · 单文件 index.html · 双击即可打开，无需联网与服务器</div>
+</div>
+</body>
+</html>
